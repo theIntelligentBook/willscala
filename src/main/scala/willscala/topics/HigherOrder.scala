@@ -18,8 +18,8 @@ object HigherOrder {
 
   implicit val nextButton: () => VHtmlNode = () => {
     challenge.next match {
-      case Some((l, s)) => <.a(^.cls := "btn btn-outline-secondary pulse-link", ^.href := Router.path(FunctionalRoute(l, s)), s"Next")
-      case _ => <.a(^.cls := "btn btn-outline-secondary pulse-link", ^.href := Router.path(FunctionalRoute(0, 0)), s"Start")
+      case Some((l, s)) => <.a(^.cls := "btn btn-outline-secondary pulse-link", ^.href := Router.path(HigherOrderRoute(l, s)), s"Next")
+      case _ => <.a(^.cls := "btn btn-outline-secondary pulse-link", ^.href := Router.path(HigherOrderRoute(0, 0)), s"Start")
     }
   }
 
