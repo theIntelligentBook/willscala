@@ -1,0 +1,84 @@
+.wren-canvas {
+
+}
+
+.wren-component {
+    fill: none;
+    stroke: black;
+    stroke-width: 1.7;
+}
+
+.wren-component text {
+    fill: black;
+    stroke: none;
+}
+
+.wren-component text.centre.middle {
+    dominant-baseline: middle;
+    text-anchor: middle;
+}
+.wren-component text.centre {
+    text-anchor: middle;
+}
+.wren-component text.right {
+    text-anchor: end;
+}
+
+.wren-component .current-source-arrow {
+    font-size: 36px;
+    font-weight: bolder;
+}
+
+.wren-canvas circle.terminal {
+    fill: black;
+    r: 2;
+}
+
+.current-arrow {
+    stroke: gray(0.8);
+    fill: none;
+    stroke-width: 1;
+}
+
+.voltage-markers {
+    text-anchor: middle;
+    dominant-baseline: middle;
+}
+
+.value-slider {
+    width: 100px;
+}
+
+.value-label.green text {
+    stroke: green;
+}
+
+.logic-probe text {
+    text-anchor: middle;
+    dominant-baseline: middle;
+    font-size: 24px;
+    font-family: monospace;
+}
+
+/*
+ * MOSFETS
+ */
+
+.semiconductor {
+    fill: lightgray;
+}
+.semiconductor.ndoped {
+    fill: pink;
+}
+.semiconductor.pdoped {
+    fill: yellowgreen;
+}
+.semiconductor.glass {
+    fill: cadetblue;
+}
+.semiconductor.channel {
+    stroke: none;
+}
+.semiconductor-connector {
+    stroke-width: 5px;
+}
