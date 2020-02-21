@@ -438,6 +438,12 @@ h1, h2, h3, h4 {
     background-color: white;
 }
 
+.topic-image.higher-order {
+    background-image: url("images/lambdagift.png");
+    background-color: white;
+}
+
+
 .challenge-header a.home-link {
     width: 60px;
     height: var(--challenge-header-height);
