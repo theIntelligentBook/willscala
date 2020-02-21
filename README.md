@@ -1,2 +1,3 @@
-# co1_CircuitsUp
-Computing Outreach 1: Circuits Up! Materials going from the basics of circuits through logic, computer architecture, assembly language and even a little proof
+# The Adventures of Will Scala
+
+An experiment in putting up a public site around one of my courses.
