@@ -9,7 +9,7 @@ case class KalturaStage(videoId:String, partnerId:String, size:(Int, Int) = (160
   override protected def render: DiffNode[Element, Node] = {
     val (width, height) = size
 
-    <("iframe")(
+    <.iframe(
       ^.attr("width") := width, ^.attr("height") := height,
       ^.src := s"https://cdnapisec.kaltura.com/p/$partnerId/sp/42442100/embedIframeJs/uiconf_id/7033932/partner_id/$partnerId?iframeembed=true&playerId=kaltura_player&entry_id=$videoId",
       ^.attr("frameBorder") := "0", ^.attr("allowFullScreen") := "true"
