@@ -1,11 +1,13 @@
 language: scala
 scala:
   - 2.13.1
+before_deploy:
+  - sbt fullOptJS
+  - git add -f target/scala-2.13/will-scala-opt.js
 deploy:
   provider: pages:git
   edge: true
   target_branch: gh-pages
-  skip_cleanup: true
   github_token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
   keep_history: false
   on:
