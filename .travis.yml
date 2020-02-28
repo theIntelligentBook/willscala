@@ -2,8 +2,7 @@ language: scala
 scala:
   - 2.13.1
 before_deploy:
-  - sbt fullOptJS
-  - git add -f target/scala-2.13/will-scala-opt.js
+  - sbt deployScript
 deploy:
   provider: pages:git
   edge: true
