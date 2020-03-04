@@ -28,7 +28,7 @@ object ImperativeProgramming {
       Echo360Stage("51342d36-7817-47bd-a702-4ec8e49cfe32"), // Thinking about programming
     )),
     Level(name="On-campus intro", stages=Seq(
-      Echo360Stage("a925bbf3-1c9d-4004-9325-5b78f20cf02e"), // On-campus Intro
+      Echo360Stage("3258f47c-e6f2-4bc5-a3b1-ebbdfa8bd066"), // On-campus Intro
     )),
     Level(name="Object oriented Scala", stages=Seq(
       Echo360Stage("487d1186-abe2-451d-ade6-9e467494c45b"), // OO

@@ -30,7 +30,7 @@ object Router extends HistoryRouter[Route] {
           | The course teaches
           | Scala, functional programming, and some asynchronous and reactive programming. It's designed for second year
           | undergraduate students, who mostly have experience of imperative languages (Python and Java). The embedded
-          | videos are mostly from the 2018 edition of the course, teaching Scala 2.12. Currently, only the first two weeks are up.
+          | videos are mostly from the 2018 edition of the course, teaching Scala 2.13. Currently, only the first two weeks are up.
           | That will gradually get updated.
           |""".stripMargin
       ),
