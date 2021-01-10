@@ -42,9 +42,9 @@ object Router extends HistoryRouter[Route] {
     )
   )
 
-  def rerender() = renderElements(render())
+  def rerender() = renderElements(render)
 
-  def render() = {
+  def render = {
     route match {
       case IntroRoute => frontPage.layout
       case ImperativeRoute(l, s) => ImperativeProgramming.challenge.show(l, s)
@@ -54,7 +54,7 @@ object Router extends HistoryRouter[Route] {
   }
 
   override def path(route: Route): String = {
-    import com.wbillingsley.veautiful.PathDSL._
+    import com.wbillingsley.veautiful.PathDSL.Compose._
 
     route match {
       case IntroRoute => (/# / "").stringify

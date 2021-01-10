@@ -69,5 +69,5 @@ class Markup(transform:(String) => String) {
 }
 
 object Markup {
-  lazy val marked = new Markup({ s:String => js.Dynamic.global.marked(s).asInstanceOf[String] })
+  lazy val marked = new Markup({ (s:String) => js.Dynamic.global.marked(s).asInstanceOf[String] })
 }

@@ -1,7 +1,7 @@
 enablePlugins(ScalaJSPlugin)
 
 name := "Will Scala"
-scalaVersion := "2.13.1"
+scalaVersion := "3.0.0-M3"
 
 // This is an application with a main method
 scalaJSUseMainModuleInitializer := true
@@ -11,11 +11,8 @@ resolvers += "jitpack" at "https://jitpack.io"
 updateOptions := updateOptions.value.withLatestSnapshots(false)
 
 libraryDependencies ++= Seq(
-  "org.scala-js" %%% "scalajs-dom" % "1.0.0",
   "com.github.wbillingsley.veautiful" %%% "veautiful" % "master-SNAPSHOT",
-  "com.github.wbillingsley.veautiful" %%% "veautiful-templates" % "master-SNAPSHOT",
-	"com.github.wbillingsley.veautiful" %%% "scatter" % "master-SNAPSHOT",
-	//"com.github.wbillingsley.veautiful" %%% "wren" % "master-SNAPSHOT"
+  "com.github.wbillingsley.veautiful" %%% "doctacular" % "master-SNAPSHOT",
 )
 
 val deployScript = taskKey[Unit]("Copies the fullOptJS script to deployscripts/")
