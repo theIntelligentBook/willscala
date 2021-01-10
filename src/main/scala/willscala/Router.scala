@@ -15,33 +15,7 @@ case class HigherOrderRoute(l:Int, s:Int) extends Route
 object Router extends HistoryRouter[Route] {
 
   var route:Route = IntroRoute
-
-  val frontPage = new FrontPage(
-    <.div(
-      <.img(^.src := "images/willscala.jpg", ^.alt := "The Adventures of Will Scala and his Merry Programs"),
-      <.div(^.cls := "abs-bottom-right white-translucent-bg",
-        Markup.marked.MarkupNode(() => "[Will Billingsley](https://www.wbillingsley.com)'s Scala course")
-      )
-    ),
-    <.div(^.cls := "lead",
-      Markup.marked.MarkupNode(() =>
-         """
-          | This is an experimental attempt to put up a public site around [one of my teaching courses](https://my.une.edu.au/courses/2020/units/COSC250).
-          | The course teaches
-          | Scala, functional programming, and some asynchronous and reactive programming. It's designed for second year
-          | undergraduate students, who mostly have experience of imperative languages (Python and Java). The embedded
-          | videos are mostly from the 2018 edition of the course, teaching Scala 2.13. Currently, only the first two weeks are up.
-          | That will gradually get updated.
-          |""".stripMargin
-      ),
-    ),
-    Seq(
-      ImperativeRoute(0, 0) -> ImperativeProgramming.topic,
-      FunctionalRoute(0, 0) -> FunctionalProgramming.topic,
-      HigherOrderRoute(0, 0) -> HigherOrder.topic
-    )
-  )
-
+  
   def rerender() = renderElements(render)
 
   def render = {
