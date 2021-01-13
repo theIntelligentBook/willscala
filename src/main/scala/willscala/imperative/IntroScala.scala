@@ -1,6 +1,7 @@
 package willscala.imperative
 
 import com.wbillingsley.veautiful.templates._
+import willscala.Common
 
 val introScala = DeckBuilder(1280, 720)
   .markdownSlide(
@@ -579,4 +580,4 @@ val introScala = DeckBuilder(1280, 720)
       |
       |""".stripMargin
   )
-  .renderNode
+  .renderSlides
