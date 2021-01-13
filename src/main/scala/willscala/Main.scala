@@ -4,7 +4,6 @@ import com.wbillingsley.veautiful.html._
 import com.wbillingsley.veautiful.doctacular._
 import org.scalajs.dom
 
-given styleSuite:StyleSuite = StyleSuite()
 val site = Site()
 
 
@@ -18,37 +17,14 @@ object Main {
     val n = dom.document.getElementById("render-here")
     n.innerHTML = ""
 
-    site.pageLayout.leftSideBarStyle.addRules(Map(
-      "" -> """
-          |background: #373a3c;
-          |color: rgb(186, 186, 186);
-          |border: none;
-          |""".stripMargin,
-      " a" ->
-        """color: rgb(186, 186, 186);
-          |""".stripMargin,
-    ))
-
-    site.pageLayout.tocItemStyles(-1).addRules(Map(
-      ".active" -> """
-          |background: #ffffff10;
-          |""".stripMargin,
-      "" -> """
-          |transition: background 0.25s;
-          |""".stripMargin,
-    ))
-    
-    site.pageLayout.sideBarToggleStyle.addRules(
-      """
-        |background: #373a3c;
-        |border: none;
-        |""".stripMargin)
-    
+    Styles.installStyles()
+        
     site.toc = site.Toc(
       "Home" -> site.HomeRoute,
       
       "1. Imperative programming" -> site.Toc(
-        "Intro" -> site.addPage("imperative", imperative.imperativeIntro)
+        "Intro" -> site.addPage("imperative", imperative.imperativeIntro),
+        "Slides: Intro to Scala syntax" -> site.addDeck("introScala", imperative.introScala)
       ),
       "2. Functional programming" -> site.Toc(
       ),
