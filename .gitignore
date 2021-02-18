@@ -1,7 +1,43 @@
-target/
+
+*.class
+*.log
+
+# Maven/sbt output directory
+target
+dist
+
+# Test database
+lift_example
+
+# Mac
+*.DS_Store
+
+# IntelliJ
+.idea
+.idea_modules
+
+# Eclipse
 .cache
 .classpath
+*.swp
 .project
-.settings/
-.idea/
-.bsp/
+.settings
+.target
+
+
+# Vagrant
+.vagrant
+vagrant/.bashrc
+vagrant/sbt-launch.jar
+
+tmp
+
+# Metals
+.bsp
+.metals
+.bloop
+metals.sbt
+
+# VSCode
+.vscode
+

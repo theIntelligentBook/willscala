@@ -24,7 +24,10 @@ object Main {
       
       "1. Imperative programming" -> site.Toc(
         "Intro" -> site.addPage("imperative", imperative.imperativeIntro),
-        "Slides: Intro to Scala syntax" -> site.addDeck("introScala", imperative.introScala)
+        "Slides: Intro to Scala syntax" -> site.addDeck("introScala", imperative.introScala),
+        "Slides: OO in Scala" -> site.addDeck("objectOrientedScala", imperative.scalaOO),
+        "Tutorial: Set up" -> site.addPage("tutorial-0", imperative.setupTutorial),
+        "Tutorial: First Steps in Scala" -> site.addPage("tutorial-1", imperative.tutorial)
       ),
       "2. Functional programming" -> site.Toc(
       ),
