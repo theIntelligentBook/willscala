@@ -12,13 +12,42 @@ val scalaOO = DeckBuilder(1280, 720)
       |
       |## Object-Oriented
       |
-      |Scala is *object-oriented*. Let's give a very quick recap of this, using a (slightly tired) analogy.
+      |Scala is sometimes described as a fusion of *object-oriented programming* and *functional programming*. 
+      |
+      |If you're coming from a Java background, you'll probably already be familiar with OO. But there are some
+      |extra features that Scala has.
+      |
+      |So, let's 
+      |
+      |* give a quick recap of what OO is, using a (slightly tired) analogy,
+      |* and start to show you some of Scala's extra features
+      |
+      |""".stripMargin)
+  .markdownSlide("""
+      |### Classes and instances
       |
       |A dog is a kind of animal. Let's say there's a *class* called `Dog`.
       |
       |```scala
       |class Dog(name: String)
       |```
+      |
+      |I happen to own a dog -- a brown labrador called Rosie. Let's say that Rosie is an *instance* of the class `Dog`
+      |
+      |```scala
+      |val rosie:Dog = Dog("Rosie")
+      |```
+      |
+      |I could also say
+      | 
+      |```scala
+      |val rosie = new Dog("Rosie")
+      |```
+      |
+      |which would mean the same thing. From Scala 3, the word `new` is optional.
+      |""".stripMargin)
+  .markdownSlide("""
+      |### Methods
       |
       |Let's assume that dogs are well-trained, and we can tell them to sit.
       |
@@ -30,24 +59,12 @@ val scalaOO = DeckBuilder(1280, 720)
       |}
       |```
       |
-      |--
+      |*Note: `???` is short for "throw a NotImplementedError"*
       |
-      |Note: `???` is short for "throw a NotImplementedError"
-      |
-    """.stripMargin)
-  .markdownSlide("""
-      |
-      |### Instances
-      |
-      |I happen to own a dog -- a brown labrador called Rosie. Let's say that Rosie is an *instance* of the class `Dog`
+      |I could tell Rosie to sit
       |
       |```scala
-      |val rosie:Dog = new Dog("Rosie")
-      |```
-      |
-      |I could tell her to sit
-      |
-      |```scala
+      |val rosie = Dog("Rosie")
       |rosie.sit()
       |```
       |

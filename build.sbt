@@ -11,8 +11,8 @@ resolvers += "jitpack" at "https://jitpack.io"
 updateOptions := updateOptions.value.withLatestSnapshots(false)
 
 libraryDependencies ++= Seq(
-  "com.github.wbillingsley.veautiful" %%% "veautiful" % "master-SNAPSHOT",
-  "com.github.wbillingsley.veautiful" %%% "doctacular" % "master-SNAPSHOT",
+  "com.github.wbillingsley.veautiful" %%% "veautiful" % "v0.2-SNAPSHOT",
+  "com.github.wbillingsley.veautiful" %%% "doctacular" % "v0.2-SNAPSHOT",
 )
 
 val deployScript = taskKey[Unit]("Copies the fullOptJS script to deployscripts/")
