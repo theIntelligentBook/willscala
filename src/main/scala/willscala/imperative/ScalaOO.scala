@@ -2,6 +2,7 @@ package willscala.imperative
 
 import com.wbillingsley.veautiful.templates._
 import willscala.Common
+import willscala.Common.willCcBy
 
 val scalaOO = DeckBuilder(1280, 720)
   .markdownSlide(
@@ -229,4 +230,5 @@ val scalaOO = DeckBuilder(1280, 720)
       |}
       |```
       |""".stripMargin)
+  .markdownSlide(willCcBy).withClass("bottom")
   .renderSlides

@@ -1,14 +1,12 @@
 package willscala.imperative
 
 import com.wbillingsley.veautiful.templates._
-import willscala.Common
+import willscala.Common._
 
 val introScala = DeckBuilder(1280, 720)
   .markdownSlide(
   """
     |# An imperative intro to Scala
-    |
-    |.byline[ *Will Billingsley, CC-BY* ]
     |""".stripMargin).withClass("center middle")
   .markdownSlides(
     """
@@ -580,4 +578,5 @@ val introScala = DeckBuilder(1280, 720)
       |
       |""".stripMargin
   )
+  .markdownSlide(willCcBy).withClass("bottom")
   .renderSlides

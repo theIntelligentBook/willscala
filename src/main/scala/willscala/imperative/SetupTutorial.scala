@@ -7,7 +7,7 @@ import willscala.Common._
 
 val setupTutorial = unique(<.div(
   marked(
-    """## Tutorial 0: Setting up your development environment
+    """## Practical: Setting up your development environment
       |
       |Many of the tutorials for this subject are provided as git repositories. 
       |

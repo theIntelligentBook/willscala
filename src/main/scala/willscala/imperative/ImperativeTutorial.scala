@@ -6,7 +6,7 @@ import willscala.Common._
 
 val tutorial = unique(<.div(
   marked(
-    """## Tutorial: First steps in Scala
+    """## Practical: First steps in Scala
       |
       |The first tutorial just tries to get you over some basic Scala syntax and get you set up in your development environment. 
       |We'll get to more idiomatic ways of writing Scala very soon, but for the moment, there are often enough hiccups just in getting set up and knowing some different keywords first.

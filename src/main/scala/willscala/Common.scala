@@ -1,7 +1,7 @@
 package willscala
 
 import willscala.templates.Markup
-import com.wbillingsley.veautiful.html.{<, SVG, VHtmlNode, ^}
+import com.wbillingsley.veautiful.html.{<, SVG, VHtmlNode, ^, Styling}
 
 import scala.scalajs.js
 
@@ -73,7 +73,25 @@ object Common {
     s"`git clone https://github.com/$user/$project.git`"
   }
 
+  val chapterHeadingStyle = Styling(
+    """
+      |text-align: center;
+      |margin: 100px;
+      |""".stripMargin)
+    .modifiedBy(
+      " img" -> "height: 200px; margin: 50px;",
+      " h1" -> "font-family: 'Playfair Design', serif; font-style: italic; font-size: 48px;",
+      " .chap-num" -> "font-family: 'Playfair Design', serif; font-style: italic; font-size: 24px; color: #888; font-variant-numeric: oldstyle-nums;"
+    )
+    .register()
 
+  def chapterHeading(number:Int, title:String, image:String) = <.div(^.cls := chapterHeadingStyle.className,
+    <.div(<.img(^.src := image)),
+    <.div(^.cls := "chap-num", s"Chapter $number"),
+    <.h1(title)
+  )
+  
+  
   val willCcBy:String =
     """
       |<p>Written by Will Billingsley</p>

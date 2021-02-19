@@ -3,12 +3,13 @@ package willscala.imperative
 import com.wbillingsley.veautiful.html.{<, Markup, SVG, VHtmlComponent, VHtmlNode, ^, unique}
 import willscala.templates.Topic
 import willscala.Common._
+import willscala.Styles._
 
 import scala.scalajs.js
 
-val imperativeIntro = unique(marked(
-  """# 1. Imperative Programming
-    |
+val imperativeIntro = unique(<.div(
+  chapterHeading(1, "Imperative Programming", "images/imperative.png"),
+  marked("""
     |If you're learning Scala, the chances are you've seen one or two different programming languages before. 
     |And for most students, the languages you've encountered will have been imperative languages (eg, Python, Java). 
     |So let's begin by taking a look at the paradigm you've seen earlier, and how modern compilers and runtimes mean 
@@ -20,7 +21,7 @@ val imperativeIntro = unique(marked(
     |For this chapter, though, let's just get over that initial hurdle of the syntax of a new language being less
     |familiar.
     |""".stripMargin
-))
+)))
 
 
 val imperativeTopic = Topic(

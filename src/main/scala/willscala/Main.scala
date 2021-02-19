@@ -26,10 +26,12 @@ object Main {
         "Intro" -> site.addPage("imperative", imperative.imperativeIntro),
         "Slides: Intro to Scala syntax" -> site.addDeck("introScala", imperative.introScala),
         "Slides: OO in Scala" -> site.addDeck("objectOrientedScala", imperative.scalaOO),
-        "Tutorial: Set up" -> site.addPage("tutorial-0", imperative.setupTutorial),
-        "Tutorial: First Steps in Scala" -> site.addPage("tutorial-1", imperative.tutorial)
+        "Practical: Set up" -> site.addPage("tutorial-0", imperative.setupTutorial),
+        "Practical: First Steps in Scala" -> site.addPage("tutorial-1", imperative.tutorial)
       ),
       "2. Functional programming" -> site.Toc(
+        "Intro" -> site.addPage("functional", functional.functionalIntro),
+        "Practical: Recursion" -> site.addPage("tutorial-2", functional.tutorial),
       ),
       "3. Funcitons as values" -> site.Toc(
       ),

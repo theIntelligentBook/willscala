@@ -36,22 +36,27 @@ object Styles {
         |""".stripMargin)
     
     styleSuite.addGlobalRules(
-      """@import url(https://fonts.googleapis.com/css?family=Fira+Mono|Fira+Sans|Lato);
+      """@import url(https://fonts.googleapis.com/css?family=Fira+Mono|Fira+Sans|Lato|Playfair+Display:ital@1);
         |
         |body {
-        | font-family: 'Lato', sans-serif;
+        |  font-family: 'Lato', sans-serif;
+        |}
+        |
+        |h1, h2, h3, h4, h5 {
+        |  font-family: 'Playfair Design', serif;  margin-top: 2rem;
         |}
         |""".stripMargin)
     
     VSlides.defaultTheme.addRules(Map(
       "" -> "font-family: 'Lato', sans-serif;",
-      " h1" -> "font-family: 'Fira Sans', sans-serif;",
-      " h2" -> "font-family: 'Fira Sans', sans-serif;",
-      " h3" -> "font-family: 'Fira Sans', sans-serif;",
-      " h4" -> "font-family: 'Fira Sans', sans-serif;",
-      " h5" -> "font-family: 'Fira Sans', sans-serif;",
+      " h1" -> "font-family: 'Playfair Design', serif; font-size: 42px; font-style: italic; color: #5a074f;",
+      " h2" -> "font-family: 'Playfair Design', serif; font-size: 36px; font-style: italic; color: #5a074f;",
+      " h3" -> "font-family: 'Playfair Design', serif; font-style: italic; color: #5a074f;",
+      " h4" -> "font-family: 'Playfair Design', serif; font-style: italic; color: #5a074f;",
+      " h5" -> "font-family: 'Playfair Design', serif; font-style: italic; color: #5a074f;",
       " code" -> "font-family: 'Fira Mono', monospace;",
       " pre" -> "font-family: 'Fira Mono', monospace;",
+      " .bottom" -> "margin-top: auto;"
     ))
     
     styleSuite.install()
