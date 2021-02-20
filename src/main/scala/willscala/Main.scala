@@ -4,6 +4,8 @@ import com.wbillingsley.veautiful.html._
 import com.wbillingsley.veautiful.doctacular._
 import org.scalajs.dom
 
+import Common._
+
 val site = Site()
 
 

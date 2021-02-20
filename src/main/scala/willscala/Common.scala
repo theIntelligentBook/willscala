@@ -1,7 +1,9 @@
 package willscala
 
 import willscala.templates.Markup
-import com.wbillingsley.veautiful.html.{<, SVG, VHtmlNode, ^, Styling}
+import com.wbillingsley.veautiful.html.{<, SVG, Styling, VHtmlNode, VHtmlComponent, ^}
+import com.wbillingsley.veautiful.doctacular.VideoPlayer
+import org.scalajs.dom.{Element, Node}
 
 import scala.scalajs.js
 
@@ -101,4 +103,17 @@ object Common {
       |  This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/3.0/au/">Creative Commons Attribution 3.0 Australia License</a>.
       |""".stripMargin
 
+
+  case class Echo360Video(videoId:String)
+
+  given VideoPlayer[Echo360Video] with
+    extension (v:Echo360Video) def embeddedPlayer(width:Int, height:Int) =
+    <.div(
+      <("iframe")(
+        ^.attr("height") := height, ^.attr("width") := width, ^.attr("allowfullscreen") := "true", ^.attr("frameborder") := "0",
+        ^.src := s"https://echo360.org.au/media/${v.videoId}/public?autoplay=false&automute=false"
+      )
+    )
+
 }
+

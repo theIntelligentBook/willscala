@@ -20,8 +20,12 @@ val imperativeIntro = unique(<.div(
     |For us, that's useful because we can look at a lot of topics without having to switch programming language. 
     |For this chapter, though, let's just get over that initial hurdle of the syntax of a new language being less
     |familiar.
-    |""".stripMargin
-)))
+    |
+    |""".stripMargin),
+  <.p(^.attr("style") := "text-align: center; margin-top: 8rem;",
+    Echo360Video("51342d36-7817-47bd-a702-4ec8e49cfe32").embeddedPlayer(720, 480)
+  )
+))
 
 
 val imperativeTopic = Topic(
