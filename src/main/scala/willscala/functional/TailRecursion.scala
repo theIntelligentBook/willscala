@@ -35,23 +35,23 @@ def stackPanel(frames:StackFrame*):VHtmlNode = <.div(^.cls := stackPanelStyling.
 
 def example1 = unique(sideBySide(
   <.pre(
-    """def sum(accum:Int, n:Int) = 
+    """def triangular(accum:Int, n:Int) = 
       |  if n <= 0 then
       |    accum
       |  else
-      |    sum(accum + n, n - 1)
+      |    triangular(accum + n, n - 1)
       |""".stripMargin)
 )(marked("A recursive function (calls itself)")))
 
 
 def example2 = <.div(<.h4("Code"), <.pre("""
-        |def sum(accum:Int, n:Int) = 
+        |def triangular(accum:Int, n:Int) = 
         |  if n <= 0 then
         |    accum
         |  else
-        |    sum(accum + n, n - 1)
+        |    triangular(accum + n, n - 1)
         |    
-        |sum(0, 3)
+        |triangular(0, 3)
         |
         |
         |""".stripMargin))
@@ -61,13 +61,13 @@ def example3 = <.div(
   <.h4("Code"), 
   <.pre("""
      |@tailrec
-     |def sum(accum:Int, n:Int) = 
+     |def triangular(accum:Int, n:Int) = 
      |  if n <= 0 then
      |    accum
      |  else
-     |    sum(accum + n, n - 1)
+     |    triangular(accum + n, n - 1)
      |    
-     |sum(0, 3)
+     |triangular(0, 3)
      |""".stripMargin)
 )
 
@@ -80,13 +80,13 @@ val tailRecursion = DeckBuilder(1280, 720)
       """## Iteration
         |
         |```java
-        |int sum = 0;
+        |int total = 0;
         |for (int i = 0; i < 100; i++) {
-        |  sum += i;
+        |  total += i;
         |}
         |```
         |
-        |Both `i++` and `sum += i` involve *mutation*. This is something functional programmers try to avoid.
+        |Both `i++` and `total += i` involve *mutation*. This is something functional programmers try to avoid.
         |
         |""".stripMargin)
   .markdownSlide("## To understand recursion, first you must understand recursion").withClass("center middle")
@@ -95,7 +95,7 @@ val tailRecursion = DeckBuilder(1280, 720)
     example1,
     sideBySide(
       <.pre(
-        """sum(0, 3)
+        """triangular(0, 3)
           |""".stripMargin)
     )(marked("What we're going to evaluate")),    
   ))
@@ -107,12 +107,12 @@ val tailRecursion = DeckBuilder(1280, 720)
         """if 3 <= 0 then
           |  0
           |else 
-          |  sum(0 + 3, 3 - 1)
+          |  triangular(0 + 3, 3 - 1)
           |
           |""".stripMargin)
     )(
       marked(
-        """Replace `sum(3, 0)` with the definition
+        """Replace `triangular(3, 0)` with the definition
           |
           |Substituting 
           | * `n` = `3`
@@ -128,7 +128,7 @@ val tailRecursion = DeckBuilder(1280, 720)
         """if 3 <= 0 then
           |  0
           |else 
-          |  sum(3, 2)
+          |  triangular(3, 2)
           |
           |""".stripMargin)
     )(
@@ -148,12 +148,12 @@ val tailRecursion = DeckBuilder(1280, 720)
           |  if 2 <= 0 then
           |    3
           |  else
-          |    sum(3 + 2, 2 - 1)
+          |    triangular(3 + 2, 2 - 1)
           |
           |""".stripMargin)
     )(
       marked(
-        """Replace inner call to `sum` with its defintion
+        """Replace inner call to `triangular` with its defintion
           |
           |Substituting
           |* `n` = `2`
@@ -172,7 +172,7 @@ val tailRecursion = DeckBuilder(1280, 720)
           |  if 2 <= 0 then
           |    3
           |  else
-          |    sum(5, 1)
+          |    triangular(5, 1)
           |
           |""".stripMargin)
     )(
@@ -189,7 +189,7 @@ val tailRecursion = DeckBuilder(1280, 720)
         """if 3 <= 0 then
           |  0
           |else 
-          |  sum(5, 1)
+          |  triangular(5, 1)
           |
           |""".stripMargin)
     )(
@@ -211,12 +211,12 @@ val tailRecursion = DeckBuilder(1280, 720)
           |  if 1 <= 0 then
           |    5
           |  else 
-          |    sum(5 + 1, 1 - 1)
+          |    triangular(5 + 1, 1 - 1)
           |
           |""".stripMargin)
     )(
       marked(
-        """Replace the call to `sum` with its definition
+        """Replace the call to `triangular` with its definition
           |
           |Substituting
           |* `n` = `1`
@@ -235,7 +235,7 @@ val tailRecursion = DeckBuilder(1280, 720)
           |  if 1 <= 0 then
           |    5
           |  else 
-          |    sum(6, 0)
+          |    triangular(6, 0)
           |
           |""".stripMargin)
     )(
@@ -252,7 +252,7 @@ val tailRecursion = DeckBuilder(1280, 720)
         """if 3 <= 0 then
           |  0
           |else 
-          |  sum(6, 0)
+          |  triangular(6, 0)
           |
           |""".stripMargin)
     )(
@@ -272,12 +272,12 @@ val tailRecursion = DeckBuilder(1280, 720)
           |  if 0 <= 0 then
           |    6
           |  else
-          |    sum(6 + 0, 0 - 1)
+          |    triangular(6 + 0, 0 - 1)
           |
           |""".stripMargin)
     )(
       marked(
-        """Replace the call to `sum` with its definition
+        """Replace the call to `triangular` with its definition
           |
           |Substituting
           |* `n` = `0`
@@ -395,11 +395,11 @@ val tailRecursion = DeckBuilder(1280, 720)
       |In our example, we don't do anything with the value from the recursive call except return it.
       |
       |```scala
-      |def sum(accum:Int, n:Int) = 
+      |def triangular(accum:Int, n:Int) = 
       |  if n <= 0 then
       |    accum
       |  else
-      |    sum(accum + n, n - 1)
+      |    triangular(accum + n, n - 1)
       |```
       |
       |This means we can *reuse* the stack frame - we don't need the local variables in this stack frame any more.
@@ -429,6 +429,108 @@ val tailRecursion = DeckBuilder(1280, 720)
     sideBySide(example3)(stackPanel(StackFrame("return 6")))
   ))
   .markdownSlide(
+    """## Mutual recursion
+      |
+      |Tail recursion works if you a function is *self-recursive* - that is, it calls itself.
+      |
+      |However, here's something it won't work for. 
+      |(Again, this is a made-up example, not tremendously useful, but it's a simple way of showing a technique).
+      |
+      |```scala
+      |def isEven(n:Int):Boolean = 
+      |  if n == 0 then true else isOdd(n - 1)
+      |  
+      |def isOdd(n:Int):Boolean = 
+      |  if n == 0 then false else isEven(n - 1)
+      |
+      |isEven(100000) // StackOverflow
+      |```
+      |
+      |We get a stack overflow exception, but it's not easy to make this tail recursive because it's a mutual recursion.
+      |
+      |""".stripMargin)
+  .markdownSlide(
+    """## Trampolines
+      |
+      |To make a tail-recursive solution, let's move some of the management of the call state from the *stack*
+      |to the *heap*. We're going to create some objects that represent the computation we're doing now.
+      |
+      |Let's declare a *sealed trait* - one whose only members are defined in the same file
+      |
+      |```scala
+      |/** Something that represents a computation step */
+      |sealed trait Trampoline[T]
+      |
+      |/** Our computation has finished */
+      |case class Done[T](val result: T) extends Trampoline[T]
+      |
+      |/** We have more work to do, in f */
+      |case class More[T](val f: () => Trampoline[T]) extends Trampoline[T]
+      |```
+      |
+      |We've declared these as `case class`es because later we're going to use the `match` keyword to ask which one
+      |we've got.
+      |""".stripMargin
+  )
+  .markdownSlide(
+    """## Converting our code to Trampolines
+      |
+      |Now, let's redefine `isEven` and `isOdd` in terms of trampolines
+      |
+      |```scala
+      |def isEven(n:Int):Trampoline[Boolean] = 
+      |  if n == 0 then Done(true) else More(() => isOdd(n - 1))
+      |  
+      |def isOdd(n:Int):Trampoline[Boolean] = 
+      |  if n == 0 then Done(false) else More(() => isEven(n - 1))
+      |```
+      |
+      |The `More` objects we're creating are objects on the *heap* (the part of memory where new objects are stored) 
+      |not the *stack*. We've changed our functions from mutally recursive functions, to functions that always return an object containing
+      |a computation.
+      |
+      |If we call
+      |
+      |```scala
+      |isEven(100000)
+      |```
+      |
+      |all we will get is a `More` object, `More(() => isOdd(n - 1))`, "closing over" `n = 100000`. 
+      |No recursion has happened yet.
+      |""".stripMargin
+  )
+  .markdownSlide(
+    """## Running a trampoline
+      |
+      |To make our code run, we need to write an interpreter for the Trampoline. 
+      |Since Trampoline is a trait, let's do it there.
+      |
+      |`match` lets us do a *pattern match* to see whether this is a `Done` or a `More`.
+      |
+      |```scala
+      |/** Something that represents a computation step */
+      |sealed trait Trampoline[T]:
+      |    @tailrec  
+      |    final def run:T = this match {
+      |        case Done(result) => result
+      |        case More(f) => f().run
+      |    }
+      |```
+      |
+      |Fortunately, our interpreter *is* tail-recursive (though we need to declare `run` as `final` so it can't be
+      |overridden).
+      |
+      |Our `isEven` and `isOdd` calls can now be executed like this:
+      |
+      |```scala
+      |isEven(100000).run  // true
+      |```
+      |
+      |Although it won't overflow the stack, we are creating and discarding a lot of objects in heap memory, so it does have some
+      |performance overhead.
+      |""".stripMargin
+  )
+  .markdownSlide(
     """## The good news
       |
       |In practice, Scala programmers don't often find themselves needing to manually writing little recursive functions.
@@ -443,7 +545,7 @@ val tailRecursion = DeckBuilder(1280, 720)
       |Locally, this is impure:
       |
       |```scala
-      |def sum(n:Int) = { 
+      |def triangular(n:Int) = { 
       |  var total = 0
       |  var i = 0 
       |  while i <= n
@@ -454,8 +556,7 @@ val tailRecursion = DeckBuilder(1280, 720)
       |}
       |```
       |
-      |However, the local variables being mutated (`i` and `total`) *never escape the function*. 
-      |
+      |However, the mutation never escapes the function.
       |To any caller, it might as well be pure.
       |""".stripMargin)
   .markdownSlide(willCcBy).withClass("bottom")
