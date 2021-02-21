@@ -183,33 +183,6 @@ val patternsAndCaseClasses = DeckBuilder(1280, 720)
       |""".stripMargin
   )
   .markdownSlide(
-    """## Using our case class
-      |
-      |Here's our case class again:
-      |
-      |```scala
-      |case class Card(value:Int, suit:Suit)
-      |```
-      |
-      |We can use a destructuring assignment on it:
-      |
-      |```scala
-      |val Card(value, suit) = card
-      |```
-      |
-      |We can also pattern match on parts of the card. 
-      |
-      |```scala
-      |def describe(card:Card):String = card match
-      |  case Card(1, Spades) => "Old Frizzle"
-      |  case Card(1, _) => "An ace"
-      |  case Card(11, Spades) | Card(11, Hearts) => "A one-eyed Jack"
-      |  case Card(x, _) if x > 10 => "A picture card"
-      |  case Card(x, y) => s"Just a boring old $x of $y"
-      |```
-      |""".stripMargin
-  )
-  .markdownSlide(
     """## Something or nothing
       |
       |In Java, if you have a reference to an object, it could be `null`.
@@ -315,9 +288,9 @@ val patternsAndCaseClasses = DeckBuilder(1280, 720)
       |integers. We won't even use the `enum` shortcut this time.
       |
       |```scala
-      |sealed trait MyIntList
-      |case object Empty extends MyIntList
-      |case class Cons(head:Int, tail:MyIntList) extends MyIntList
+      |sealed trait IntList
+      |case object Empty extends IntList
+      |case class Cons(head:Int, tail:IntList) extends IntList
       |```
       |
       |Notice that `Empty` is a case object - there is only one empty list object.
