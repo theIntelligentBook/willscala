@@ -39,6 +39,7 @@ object Main {
       ),
       "3. Funcitons as values" -> site.Toc(
         "Intro" -> site.addPage("higherOrder", higherOrder.higherOrderIntro),
+        "Slides: Higher Order Functions" -> site.addDeck("higherOrderFunctions", higherOrder.higherOrderDeck),
         "Practical: Sudoku Sensei" -> site.addPage("tutorial-3", higherOrder.tutorial),
       ),
       "4. Types" -> site.Toc(
