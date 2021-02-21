@@ -34,6 +34,7 @@ object Main {
       "2. Functional programming" -> site.Toc(
         "Intro" -> site.addPage("functional", functional.functionalIntro),
         "Slides: Recursion and the Stack" -> site.addDeck("recursionAndTheStack", functional.tailRecursion),
+        "Slides: Patterns and Lists" -> site.addDeck("patternsAndLists", functional.patternsAndLists),
         "Practical: Recursion" -> site.addPage("tutorial-2", functional.tutorial),
       ),
       "3. Funcitons as values" -> site.Toc(
