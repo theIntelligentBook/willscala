@@ -112,7 +112,7 @@ val tailRecursion = DeckBuilder(1280, 720)
           |""".stripMargin)
     )(
       marked(
-        """Replace `triangular(3, 0)` with the definition
+        """Replace `triangular(0, 3)` with the definition
           |
           |Substituting 
           | * `n` = `3`
@@ -550,7 +550,7 @@ val tailRecursion = DeckBuilder(1280, 720)
       |  var i = 0 
       |  while i <= n
       |    total += n
-      |    i++
+      |    i += 1
       |    
       |  total
       |}
