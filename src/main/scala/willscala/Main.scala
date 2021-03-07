@@ -2,6 +2,7 @@ package willscala
 
 import com.wbillingsley.veautiful.html._
 import com.wbillingsley.veautiful.doctacular._
+import Medium._
 import org.scalajs.dom
 
 import Common._
@@ -26,15 +27,30 @@ object Main {
       
       "1. Imperative programming" -> site.Toc(
         "Intro" -> site.addPage("imperative", imperative.imperativeIntro),
-        "Slides: Intro to Scala syntax" -> site.addDeck("introScala", imperative.introScala),
-        "Slides: OO in Scala" -> site.addDeck("objectOrientedScala", imperative.scalaOO),
+        "Intro to Scala syntax" -> site.add("introScala", 
+          Alternative("Slide deck", Deck(() => imperative.introScala)),
+          Alternative("Watch the video", Video(() => PlayableVideo(Echo360Video("92548534-cc2c-4661-99d4-f2dfc1e26309")))),
+        ),
+        "OO in Scala" -> site.add("objectOrientedScala",
+          Alternative("Slide deck", Deck(() => imperative.scalaOO)),
+          Alternative("Watch the video", Video(() => PlayableVideo(Echo360Video("302bd7dc-7a82-4d9a-a702-6efb5e94bb41")))),
+        ),
         "Practical: Set up" -> site.addPage("tutorial-0", imperative.setupTutorial),
         "Practical: First Steps in Scala" -> site.addPage("tutorial-1", imperative.tutorial)
       ),
       "2. Functional programming" -> site.Toc(
         "Intro" -> site.addPage("functional", functional.functionalIntro),
-        "Slides: Recursion and the Stack" -> site.addDeck("recursionAndTheStack", functional.tailRecursion),
-        "Slides: Patterns and Case Classes" -> site.addDeck("patternsAndCaseClasses", functional.patternsAndCaseClasses),
+        "Recursion and the Stack" -> site.add("recursionAndTheStack",
+          Alternative("Slide deck", Deck(() => functional.tailRecursion)),
+          Alternative("Watch the video", Video(() => PlayableVideo(Echo360Video("bb115215-0f39-4a1f-9e95-2b6060457a16")))),
+        ),
+        "Patterns and Case Classes" -> site.add("patternsAndCaseClasses",
+          Alternative("Slide deck", Deck(() => functional.patternsAndCaseClasses)),
+          Alternative("Watch the video", Video(() => PlayableVideo(Echo360Video("71af9d97-a6ed-43aa-ba6b-fdd18a0e197a")))),
+        ),
+        "Immutable Lists" -> site.add("immutableLists",
+          Alternative("Slide deck", Deck(() => functional.immutableLists)),
+        ),
         "Practical: Recursion" -> site.addPage("tutorial-2", functional.tutorial),
       ),
       "3. Funcitons as values" -> site.Toc(
