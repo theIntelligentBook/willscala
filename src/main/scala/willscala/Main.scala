@@ -50,6 +50,7 @@ object Main {
         ),
         "Immutable Lists" -> site.add("immutableLists",
           Alternative("Slide deck", Deck(() => functional.immutableLists)),
+          Alternative("Watch the video", Video(() => PlayableVideo(Echo360Video("696acc25-5694-4386-8129-90a8c3e492c1")))),
         ),
         "Practical: Recursion" -> site.addPage("tutorial-2", functional.tutorial),
       ),

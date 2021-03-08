@@ -153,7 +153,7 @@ val immutableLists = DeckBuilder(1280, 720)
       |trait IntList:
       |  @tailrec
       |  def apply(n:Int):Int = this match {
-      |    case Empty => throw new IndexOutOfRangeException()
+      |    case Empty => throw new IndexOutOfBoundsException()
       |    case Cons(h, tail) => if n <= 0 then h else tail.apply(n - 1)
       |```
       |
@@ -185,12 +185,12 @@ val immutableLists = DeckBuilder(1280, 720)
                    |Just as we were able to pattern match inside tuples, we can also pattern match inside lists
                    |
                    |```scala
-                   |def describeList[T](list:List[T]) = 
-                   |  list match 
-                   |    case Nil => "The list was empty"
-                   |    case a :: Nil => "It only had one element"
-                   |    case a :: b :: tail if b % 2 == 0 => "The second element was even"
-                   |    case _ => "The second element was odd"
+                   |def describeList[T](list:List[T]):String = list match
+                   |  case Nil => "The list was empty"
+                   |  case a :: Nil => "The list had one element"
+                   |  case a :: (b:Int) :: tail if b % 2 == 0 => "The second element was even"
+                   |  case a :: (b:Int) :: tail => "The second element was odd"
+                   |  case _ => "The second element was not a number"
                    |    
                    |describe(1 :: 2 :: 3 :: 4 :: Nil)
                    |```
@@ -203,11 +203,12 @@ val immutableLists = DeckBuilder(1280, 720)
                    |Scala being Scala, we can also use List's constructor syntax in some of the cases
                    |
                    |```scala
-                   |def describeList(l:List[Int]):String = l match 
-                   |  case List() => "It was empty"
-                   |  case List(_) => "It only had one element"
-                   |  case _ :: b :: _ if b % 2 == 0 => "The second element was even"
-                   |  case _ => "The second element was odd"
+                   |def describeList[T](list:List[T]):String = list match
+                   |  case List() => "The list was empty"
+                   |  case List(_) => "The list had one element"
+                   |  case a :: (b:Int) :: tail if b % 2 == 0 => "The second element was even"
+                   |  case a :: (b:Int) :: tail => "The second element was odd"
+                   |  case _ => "The second element was not a number"
                    |
                    |describe(1 :: 2 :: 3 :: 4 :: Nil)
                    |```

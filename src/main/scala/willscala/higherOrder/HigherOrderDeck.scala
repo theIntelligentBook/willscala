@@ -16,7 +16,7 @@ val higherOrderDeck = DeckBuilder(1280, 720)
       |
       |So far, we've met functional programming in terms of *pure functions* -- functions that have no side-effects
       |
-      |Another characteristic of functional languages is that functions are first class citizens -- functions can be values and they can be arguments
+      |Another characteristic of functional languages is that functions are first class citizens. Functions can be values and they can be arguments
       |
       |A function that takes a function as an argument, or returns a function, is called a ***higher order function***
       |
