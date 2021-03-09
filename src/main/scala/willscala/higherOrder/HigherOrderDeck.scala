@@ -32,127 +32,156 @@ val higherOrderDeck = DeckBuilder(1280, 720)
       |
       |`twice` is a name for something, but what is it?
       |
+      |```scala
+      |twice // : Function1[Int, Int]
+      |```
+      |
       |It's a function from `Int => Int`
       |
       |""".stripMargin)
   .markdownSlide("""
       |### Functions as values
       |
-      |We can't just say this (try it):
+      |Functions can themselves be put into values or variables
       |
       |```scala
       |val t = twice
       |```
       |
-      |But we can say:
-      |
-      |```scala
-      |val t:Int => Int = twice
-      |``` 
-      |
       |Our value `t` now contains the *function* twice, not the result of a call to twice.
-      |""".stripMargin)
-  .markdownSlide("""
-      |### Functions as arguments
-      |
-      |If we can put a function into a value (or variable), can we pass it around?
-      |
-      |Let's see if we can apply it to every member of a list...
       |
       |```scala
-      |def applyToSeq(func:Int => Int)(seq:Seq[Int]):Seq[Int] = {
-      |  import scala.collection.mutable
+      |t(2)
+      |```
+      |""".stripMargin)
+  .markdownSlide("""
+      |## Functions as arguments
       |
-      |  val b = new mutable.ArrayBuffer[Int](seq.length)
-      |  var i = 0;
-      |  while(i < seq.length) do
-      |    b.append(func(seq(i)))
+      |We can also pass a function as a value.
+      |
+      |Let's start by showing this imperatively
+      |
+      |```scala
+      |def twice(i:Int) = 2 * i
+      |
+      |def runIt(f: Int => Int):Unit = 
+      |  var i = 0
+      |  while i < 10 do 
+      |    println(s"The result of applying f to $i is ${f(i)}")
       |    i += 1
-      |  
-      |  b
-      |}
+      |    
+      |runIt(twice)
+      |```
+      |""".stripMargin)
+  .markdownSlide("""
+      |## A higher order function on lists
+      |
+      |Let's suppose we have a home-grown list of `Int`s:
+      |
+      |```scala
+      |sealed trait IntList
+      |case object Empty extends IntList
+      |case class Cons(head:Int, tail:IntList) extends IntList
+      |
+      |val listOf123 = Cons(1, Cons(2, Cons(3, Empty)))
+      |```
+      |
+      |Let's define a method that will take some function `Int => Int` and apply it to every element in the list,
+      |producing a new list containing the results.
+      |
+      |This function is called `map` because it uses the function to *map* every value in the list to a corresponding 
+      |value in the new list.
+      |
+      |""".stripMargin)
+  .markdownSlide("""
+      |## Defining map
+      |
+      |A recursive definition of `map` for our `IntList` is very short
+      |
+      |```scala
+      |sealed trait IntList:
+      |  def map(f: Int => Int):IntList = this match 
+      |    case Empty => Empty
+      |    case Cons(head, tail) => Cons(f(head), tail.map(f))
+      |
+      |case object Empty extends IntList
+      |case class Cons(head:Int, tail:IntList) extends IntList
+      |```
+      |
+      |Let's try it out:
+      |
+      |```scala
+      |def twice(i:Int) = 2 * i
+      |Cons(1, Cons(2, Cons(3, Empty))).map(twice)
       |```
       |
       |""".stripMargin)
   .markdownSlide("""
+      |## `List[T].map`
       |
-      |### Functions as arguments
-      |
-      |Let's try applying `twice` to `applyToSeq`
-      |
-      |```scala
-      |applyToSeq(twice)(Seq(1, 2, 3))
-      |```
-      |
-      |This should give us as output in the worksheet
+      |Map is such a useful method that it's already part of the Scala core library and is defined on `List[T]`
+      |(as well as on lots of other types)
       |
       |```scala
-      |res2: Seq[Int] = ArrayBuffer(2, 4, 6)
-      |```
-      |
-      |That seems rather useful. I wonder if we could use it to write *thrice* (three times) quickly?
-      |
-      |--
-      |
-      |```scala
-      |applyToSeq((x:Int) => x * 3)(Seq(1, 2, 3))
-      |```
-      |
-      |--
-      |
-      |or (shorthand):
-      |
-      |```scala
-      |applyToSeq(_ * 3)(Seq(1, 2, 3))
+      |val myList:List[Int] = List(1, 2, 3)
+      |myList.map(twice)  // List(2, 4, 6)
       |```
       |
       |""".stripMargin)
   .markdownSlide("""
+      |## Passing a lambda to a higher order function
       |
-      |### Map
-      |
-      |In fact, that is so useful that *it's already provided on the `Seq` class*
-      |
-      |Their implementation is a little more complex for reasons we won't get into
+      |We can also call `List[T].map` with a lambda
       |
       |```scala
-      |  def map[B, That](f: A => B)(implicit bf: CanBuildFrom[Repr, B, That]): That = {
-      |    def builder = { // extracted to keep method size under 35 bytes, so that it can be JIT-inlined
-      |      val b = bf(repr)
-      |      b.sizeHint(this)
-      |      b
-      |    }
-      |    val b = builder
-      |    for (x <- this) b += f(x)
-      |    b.result
-      |  }
+      |// Let's double these
+      |List(1, 2, 3).map((x) => x * 2)
       |```
       |
-      |--
+      |Hmm, that makes one of our tutorial exercises from week 1 (doubling the contents of a list) pretty short!  
+      |We can go shorter still using a shorthand syntax:
       |
-      |You'll notice, their version is *locally mutable* -- it uses a builder
+      |```scala
+      |// Let's triple these
+      |List(1, 2, 3).map(_ * 3)
+      |```
+      |
+      |Scala even defines a `map` method on arrays for us:
+      |
+      |```scala
+      |// Let's quadruple an array
+      |Array(1, 2, 3, 4).map(_ * 4)
+      |```
       |
       |""".stripMargin)
   .markdownSlide("""
+      |## Mapping from one type to another
       |
-      |### Map
-      |
-      |Now that we've got our `map` function, some of the exercises from tutorial 1 seem rather trivial...
+      |List takes a type parameter - it's `List[A]`. If we go and take a look at the definition of `map`, we'll see it's
       |
       |```scala
-      |def doubleArray(arr:Array[Int]):Array[Int] = arr.map(_ * 2)
+      |  def map[B](f: A => B):List[B]
       |```
       |
-      |--
+      |So, if we have a list of integers, we could map them to a list of strings, by passing `f: Int => String`
       |
-      |Even though Scala uses native Java arrays, it enhances them to add some of its collections functions such as `map`
+      |```scala
+      |val strings = List("Algernon", "Bertie", "Cecily")
+      |
+      |List[Int](1, 2, 3).map[String]((x) => strings(x))
+      |```
+      |
+      |or, letting the type parameters be inferred, just:
+      |
+      |```scala
+      |List(1, 2, 3).map((x) => strings(x))
+      |```
       |
       |""".stripMargin)
   .markdownSlide("""
+      |## Times position
       |
-      |### Times position
-      |
-      |To do this once:
+      |To do this exercise using `map`:
       |
       |```scala
       |  /**
@@ -173,7 +202,6 @@ val higherOrderDeck = DeckBuilder(1280, 720)
       |
       |""".stripMargin)
   .markdownSlide("""
-      |
       |## Times Position
       |
       |```scala
@@ -189,17 +217,22 @@ val higherOrderDeck = DeckBuilder(1280, 720)
       |  }
       |```
       |
-      |That looks too long. This week we'll also see pattern matching...
+      |That looks too long. From Scala 3, we can automatically unapply a tuple in a lambda.
       |
       |```scala
-      |def timesPosition(arr:Array[Int]):Array[Int] = {
-      |  arr.zipWithIndex.map({case (x,i) => x * i})
-      |}
+      |def timesPosition(arr:Array[Int]):Array[Int] =
+      |  arr.zipWithIndex.map((x,i) => x * i)
+      |```
+      |
+      |Or, we could use a `case` expression to unapply it like any other case class
+      |
+      |```scala
+      |def timesPosition(arr:Array[Int]):Array[Int] = 
+      |  arr.zipWithIndex.map({ case (x,i) => x * i })
       |```
       |
       |""".stripMargin)
   .markdownSlide("""
-      |
       |## Returning a function
       |
       |* We could say
