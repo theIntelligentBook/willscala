@@ -64,6 +64,7 @@ object Main {
         "Practical: Sudoku Sensei" -> site.addPage("tutorial-3", higherOrder.tutorial),
       ),
       "4. Types" -> site.Toc(
+        "Intro" -> site.addPage("types", types.typesIntro),
       ),
       "5. Category theory" -> site.Toc(
       ),
