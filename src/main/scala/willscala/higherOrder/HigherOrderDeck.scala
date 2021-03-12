@@ -256,7 +256,59 @@ val higherOrderDeck = DeckBuilder(1280, 720)
       |
       |""".stripMargin)
   .markdownSlide("""
-      |
+       |## Filter
+       |
+       |Let's go back to our home-grown `IntList` and define a method that will take some function `Int => Boolean` and 
+       |apply it to every element in the list, producing a new list containing only the results that map to `true`.
+       |
+       |This function is called `filter` because it filters the list to include only the ones where the predicate is
+       |true
+       |
+       |```scala
+       |sealed trait IntList:
+       |  def filter(f: Int => Boolean):IntList = this match
+       |    case Empty => Empty
+       |    case Cons(head, tail) if f(head) => Cons(head, tail.filter(f))
+       |    case Cons(_, tail) => tail.filter(f)
+       |
+       |Cons(1, Cons(2, Cons(3, Cons(4, Cons(5, Empty))))).filter(_ % 2 == 0)
+       |```
+       |""".stripMargin)
+  .markdownSlide("""
+       |## Exists
+       |
+       |Let's define a method `exists` that will take a function `Int => Boolean` and will return true if *any* of
+       |the numbers in the list map to `true`.
+       |
+       |```scala
+       |sealed trait IntList:
+       |  def exists(f: Int => Boolean):Boolean = this match
+       |    case Empty => false
+       |    case Cons(head, tail) if f(head) => true
+       |    case Cons(_, tail) => tail.exists(f)
+       |
+       |Cons(1, Cons(2, Cons(3, Cons(4, Cons(5, Empty))))).exists(_ % 2 == 0)  // true
+       |Cons(1, Cons(2, Cons(3, Cons(4, Cons(5, Empty))))).exists(_ % 200 == 0)  // false
+       |```
+       |""".stripMargin)
+  .markdownSlide("""
+       |## Exists
+       |
+       |Let's define a method `exists` that will take a function `Int => Boolean` and will return true only if *all* of
+       |the numbers in the list map to `true`.
+       |
+       |Let's be lazy on this one - `list.forall(f)` is true if `lists.exists(x => !f(x))` is false
+       |
+       |```scala
+       |sealed trait IntList:
+       |  def exists(f: Int => Boolean):Boolean = 
+       |    !exists(!f(_))
+       |
+       |Cons(1, Cons(2, Cons(3, Cons(4, Cons(5, Empty))))).forall(_ % 2 != 0)  // false
+       |Cons(1, Cons(2, Cons(3, Cons(4, Cons(5, Empty))))).exists(_ % 200 != 0)  // true
+       |```
+       |""".stripMargin)
+  .markdownSlide("""
       |## Ranges
       |
       |We'll use ranges in the next few examples
@@ -273,14 +325,11 @@ val higherOrderDeck = DeckBuilder(1280, 720)
       |```scala
       |0 until 10 // Range = Range 0 until 10
       |// ie, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
-      |
       |```
-      |
       |
       |""".stripMargin)
   .markdownSlide("""
-      |
-      |## Filter
+      |## Filter on `List[T]`
       |
       |Suppose we have a range of numbers
       |
@@ -288,18 +337,14 @@ val higherOrderDeck = DeckBuilder(1280, 720)
       |val range = 1 to 100
       |```
       |
-      |How can we get all the even numbers out? You might find the `filter` method useful. It takes a predicate `p: A => Boolean`
-      |
-      |--
+      |This will give us all the even numbers
       |
       |```scala
       |range.filter(_ % 2 == 0)
       |```
-      |
       |""".stripMargin)
   .markdownSlide("""
-      |
-      |## exists and forall
+      |## A prime number check
       |
       |Let's do a very inefficient prime check using `exists`. It also takes a predicate, and returns true if there exists within the collection a value for which it returns true. 
       |
@@ -321,10 +366,9 @@ val higherOrderDeck = DeckBuilder(1280, 720)
       |
       |""".stripMargin)
   .markdownSlide("""
-      |
       |## The primes from 1 to 100
       |
-      |Let's pass our check into filter to produce a (very inefficient) prime number generator:
+      |Let's pass our check into filter to produce a (not very efficient) prime number generator:
       |
       |```scala
       |def prime(x:Int) = {
@@ -339,12 +383,9 @@ val higherOrderDeck = DeckBuilder(1280, 720)
       |
       |""".stripMargin)
   .markdownSlide("""
-      |
       |## `for` as Syntactic sugar
       |
-      |In week 1, I said `for` in Scala does something quite unique, but actually quite readable.
-      |
-      |Let's start with the simple version
+      |When I introduced Scala syntax, I said `for` in Scala does something unique but quite readable.
       |
       |```scala
       |for { i <- 1 to 100 } yield i * 2
@@ -356,12 +397,22 @@ val higherOrderDeck = DeckBuilder(1280, 720)
       |(1 to 100).map(_ * 2)
       |```
       |
+      |So, in our home-grown `IntList`, by defining `map`, we enabled a simple for-comprehension:
+      |
+      |```scala
+      |sealed trait IntList:
+      |  def map(f: Int => Int):IntList = this match 
+      |    case Empty => Empty
+      |    case Cons(h, t) => Cons(f(h), t.map(f))
+      |
+      |val oneToFive = Cons(1, Cons(2, Cons(3, Cons(4, Cons(5, Empty)))))
+      |for i <- oneToFive yield i * 2
+      |```
       |""".stripMargin)
   .markdownSlide("""
-      |
       |## `for` as Syntactic sugar
       |
-      |But now let's do something just as readable but where the translation is a bit different
+      |Let's do something just as readable but where the translation is a bit different
       |
       |```scala
       |def isPrime(x:Int) = {
@@ -382,7 +433,6 @@ val higherOrderDeck = DeckBuilder(1280, 720)
       |
       |""".stripMargin)
   .markdownSlide("""
-      |
       |## `map` on `Seq`, `List`, etc
       |
       |Coming back to `map`, let's show it works on other collections
@@ -398,8 +448,9 @@ val higherOrderDeck = DeckBuilder(1280, 720)
       |
       |""".stripMargin)
   .markdownSlide("""
+      |## Flattening two lists
       |
-      |## What if my f also produces a seq?
+      |Let's make a function that repeats the number *n*, *n* times.
       |
       |```scala
       |def nTimes(n:Int) = for { i <- 0 until n } yield n
@@ -425,11 +476,38 @@ val higherOrderDeck = DeckBuilder(1280, 720)
       |```
       |
       |For the moment, think of *flatMap* as *map* followed by *flatten*. 
-      |But we'll see a more mathematical way of thinking about it later.
-      |
       |""".stripMargin)
   .markdownSlide("""
+      | ## Our own flatMap
+      | 
+      | Let's define `flatMap` for our homegrown `IntList`. 
+      | 
+      | ```scala
+      | sealed trait IntList:
+      |   def flatMap(f: Int => IntList):IntList = ???
+      | ```
+      | 
+      | We're going to have a little problem. It can't really be "map then flatten" because our `IntList` only supports
+      | lists of `Int`s, not lists of `IntList`s.
+      | 
+      | But we can still have a `flatMap` function that has that type signature.
+      | For each element, let's apply `f`, getting an `IntList`, and then concatenate it with whatever the tail produces.
+      | (We'd better define concatenate too.)
+      | 
+      |```scala
+      |sealed trait IntList:
       |
+      |  def flatMap(f: Int => IntList):IntList = this match
+      |    case Empty => Empty
+      |    case Cons(h, tail) => f(h) ++ tail.flatMap(f)
+      | 
+      |  def ++(other:IntList):IntList = this match 
+      |    case Empty => other
+      |    case Cons(h, tail) => Cons(h, tail ++ other)
+      |```
+      | 
+      |""".stripMargin)
+  .markdownSlide("""
       |## for syntactic sugar again...
       |
       |```scala
@@ -552,33 +630,23 @@ val higherOrderDeck = DeckBuilder(1280, 720)
       |
       |### Something to notice
       |
-      |On `List[T]`, `foldLeft` is *tail recursive*!
+      |On `List[T]` in particular, `foldLeft` is tail recursive.
       |
       |((((((((0 + 0) + 1) + 2) + 3) + 4) + 5) + 6) + 7) + 8)  
       |
       |We can show that with our own little re-implementation
       |
       |```scala
-      |@tailrec
-      |def fl2[A](l:List[Int])(base:A)(func:(A,Int) => A): A = {
-      |  if (l.isEmpty)
-      |    base
-      |  else {
-      |    fl2(l.tail)(func(base, l.head))(func)
-      |  }
-      |}
-      |```
+      |sealed trait IntList:
       |
-      |```scala
-      |fl2(List(7, 8, 9))(0)({ case (base, head) =>
-      |  println(s"Called for base (sum so far) $base and head $head")
-      |  base + head
-      |})
+      |  @tailrec
+      |  def foldLeft(start:Int)(f: (Int, Int) => Int):Int = this match
+      |    case Empty => start
+      |    case Cons(h, t) => t.foldLeft(f(start, h))(f)
       |```
       |
       |""".stripMargin)
   .markdownSlide("""
-      |
       |### foldLeft and Catamorphism
       |
       |`foldLeft` is defined on List, Seq, etc. But in principle, you can apply it to any ordered collection. 
