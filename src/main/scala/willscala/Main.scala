@@ -56,11 +56,14 @@ object Main {
       ),
       "3. Funcitons as values" -> site.Toc(
         "Intro" -> site.addPage("higherOrder", higherOrder.higherOrderIntro), 
-        "Slides: Higher Order Functions" -> site.add("higherOrderFunctions",
+        "Higher Order Functions" -> site.add("higherOrderFunctions",
           Alternative("Slide deck", Deck(() => higherOrder.higherOrderDeck)),
           Alternative("Watch the video", Video(() => PlayableVideo(Echo360Video("7f3082fe-7ec7-4ac1-bfd9-73957e60370b")))),
         ),
-        "Slides: Einstein's Problem" -> site.addDeck("einsteinProblem", higherOrder.einsteinDeck),
+        "Solving Einstein's Puzzle" -> site.add("einsteinProblem",
+          Alternative("Slide deck", Deck(() => higherOrder.einsteinDeck)),
+          Alternative("Live-coded output", Page(() => livedemo.einsteinDemo)),
+        ),
         "Practical: Sudoku Sensei" -> site.addPage("tutorial-3", higherOrder.tutorial),
       ),
       "4. Types" -> site.Toc(

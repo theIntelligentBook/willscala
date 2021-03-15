@@ -63,7 +63,7 @@ case class Street(houses:Seq[House] = Seq.fill(5)(House.unknown)):
     indices.exists((i, j) => houses(i).couldContain(left) && houses(j).couldContain(right))
 
   /** The constraints broken by this street */
-  def breaks:Iterator[Prop] = propositions.iterator.filter((_, prop) => !prop(this))
+  def breaks:Option[Prop] = propositions.find((_, prop) => !prop(this))
 
   /** Returns a street, eliminating a possibility */
   def eliminate(move:Move) =
@@ -98,7 +98,7 @@ case class Street(houses:Seq[House] = Seq.fill(5)(House.unknown)):
   def illegalMoves:Iterator[(Move, Prop)] =
     for
       m <- possibleMoves
-      prop <- applyMove(m).breaks.nextOption()
+      prop <- applyMove(m).breaks
     yield (m, prop)
 
   /** If there is an illegal move, the street you get from eliminating that possibility */

@@ -36,7 +36,10 @@ val einsteinDeck = DeckBuilder(1280, 720)
       |>
       |> So, who owns the fish?
       |
-      |We're going to solve it using higher order functions
+      |We're going to solve it using higher order functions.
+      | 
+      |This is a complex example, probably much more complex than the ones in the exercises, but hopefully it gives us
+      |a chance to put some concepts together and solve something bigger (in a demo at least).
       |""".stripMargin
   )
   .veautifulSlide(<.div(
@@ -134,6 +137,9 @@ val einsteinDeck = DeckBuilder(1280, 720)
       |type Move = (Int, Int, Symbol)
       |```
       |
+      |What we've used is a *type alias*. We haven't created any new types here - a move is just a tuple 
+      |`(Int, Int, Symbol)`. We've just given ourselves an *alias* to refer to that type by.
+      |
       |For instance, this would be a `Move` setting the occupant of the leftmost house to be the Norwegian:
       |
       |```scala
@@ -199,6 +205,41 @@ val einsteinDeck = DeckBuilder(1280, 720)
     renderStreet(Street().applyMove((0, 0, Nationality.Englishman)))
   ))
   .markdownSlide(
+    """## All possible moves...
+      |
+      |The way we're going to try solving this is we're going to consider every possible "move" (assigning a value to
+      |a cell) that we could make. If it would break a constraint, we know we can eliminate that possibility.
+      |
+      |So for instance, if we try to make the move `(0, 2, Colour.white)`, setting the leftmost house white, we should 
+      |break the constraint:
+      |
+      |> The green house is to the left of the white house
+      |
+      |So, as we now know setting the first house to white will definitely break a constraint, we can eliminate it from
+      |the possibilites for the first house.
+      |
+      |""".stripMargin)
+  .markdownSlide(
+    """## All the possible moves
+      |
+      |To be a little more efficient, I've used an `Iterator` to get the moves. This is something that works very much
+      |like Java iterators, but Scala being Scala, we can use our maps and for-comprehensions on it.
+      |
+      |```scala
+      |  def possibleMoves:Iterator[Move] =
+      |    for
+      |      i <- houses.indices.iterator
+      |      j <- houses(i).cells.indices.iterator if houses(i).cells(j).length > 1
+      |      v <- houses(i).cells(j).iterator
+      |    yield (i, j, v)
+      |```
+      |
+      |Next, we need to work out which of those moves are legal. For that, we'll need to model the propositions in the
+      |riddle.
+      |
+      |""".stripMargin
+  )
+  .markdownSlide(
     """## Modelling the propositions
       |
       |The street we produced with the Englishman in the first house isn't valid, because one of the statements was that
@@ -211,6 +252,9 @@ val einsteinDeck = DeckBuilder(1280, 720)
       |/** A proposition is a tuple containing a name and test to run on a Street */
       |type Prop = (String, Street => Boolean)
       |```
+      |
+      |Again, this is a *type alias*. We haven't created a new type - it is still a tuple - we've just given ourselves
+      |a more readable alias to refer to it by,
       |
       |""".stripMargin)
   .markdownSlide(
@@ -328,5 +372,101 @@ val einsteinDeck = DeckBuilder(1280, 720)
       |
       |""".stripMargin
   )
-  .markdownSlide(willCcBy)
+  .markdownSlide(
+    """## Applying the rules
+      |
+      |A proposition is a tuple, `(String, Street => Boolean)`
+      | 
+      |So to see if a proposition is broken, we can
+      |
+      |```scala
+      |val (name, rule) = prop
+      |prop(street) // true if it holds, false if it's broken
+      |```
+      |
+      |We have a list of propositions, so let's find the first one that breaks. `find` is a higher order function that
+      |works much like `filter`, except it returns an `Option`: `Some(item)` if it found one, `None` if it didn't.
+      |
+      |```scala
+      |case class Street(houses:Seq[House]):
+      |
+      |  /** The first constraint, if any, broken by this street */
+      |  def breaks:Option[Prop] = propositions.find((_, prop) => !prop(this))
+      |```
+      |
+      """.stripMargin)
+  .markdownSlide(
+    """## Finding the illegal moves
+      |
+      |Now, what we've got is:
+      |
+      |* A starting condition
+      |* A function that'll give us an *iterator* on every "move" (value setting)
+      |* A set of constraints to check on the streets we'd have if we set those values.
+      |
+      |Let's put those together and find all the *illegal* moves to eliminate:
+      |
+      |```scala
+      |  /** Every illegal move */
+      |  def illegalMoves:Iterator[(Move, Prop)] =
+      |    for
+      |      m <- possibleMoves
+      |      prop <- applyMove(m).breaks
+      |    yield (m, prop)
+      |```scala
+      |
+      |""".stripMargin)
+  .markdownSlide(
+    """## Our process of elimination
+      |
+      |For any street, let's just find the "next" illegal move. That is, the first one from the iterator.
+      |And let's eliminate it, and return the street it produces.
+      |
+      |So, we're going to produce `Some((brokenRule, illegalMove, resultOfEliminatingIt))`, if there is one. 
+      |
+      |```scala
+      |  def next:Option[(String, Move, Street)] =
+      |    for
+      |      (move, (ruleName, _)) <- illegalMoves.nextOption()
+      |    yield (ruleName, move, this.eliminate(move))
+      |```
+      |
+      |We'll also need to define `eliminate` on a street, to give us a street without that value. It's 
+      |
+      |```scala
+      |  def eliminate(move:Move):Street =  
+      |    val (h, r, symbol) = move
+      |    Street(houses.updated(h, houses(h).eliminate(r, symbol))
+      |```
+      |
+      |""".stripMargin
+  )
+  .markdownSlide(
+    """## Our process of elimination...
+      |
+      |We could do the elimination imperatively
+      |
+      |```scala
+      |var street:Street = Street()
+      |var done = false
+      |while !done do
+      |  street.next match 
+      |    case Some((brokenRule, move, afterElimination)) =>
+      |      street = afterElimination 
+      |    case _ => done = true
+      |```
+      |
+      |Or we could do it tail recursively
+      |
+      |```scala
+      |@tailrec
+      |def solve(s:Street):Street = 
+      |  s.next match 
+      |    case Some(next) => solve(next)
+      |    case None => s
+      |```
+      |
+      |""".stripMargin
+  )
+  .markdownSlide(willCcBy).withClass("bottom")
   .renderSlides
