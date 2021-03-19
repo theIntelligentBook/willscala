@@ -8,6 +8,26 @@ given styleSuite:StyleSuite = StyleSuite()
 
 object Styles {
   
+  val imageSlide = Styling(
+    """position: relative;
+      |top: 0;
+      |width: calc(100% + 100px);
+      |height: calc(100% + 100px);
+      |margin: -50px;
+      |""".stripMargin
+  ).modifiedBy(
+    ".cover" -> "object-fit: cover;",
+    " figcaption" ->
+      """font-size: 3rem;
+        |position: absolute;
+        |bottom: 10px;
+        |left: 10px;
+        |background: rgba(255, 255, 255, 0.7);
+        |padding: 5px;
+        |border-radius: 5px;
+        |""".stripMargin
+  ).register()
+  
   def installStyles():Unit = {
     site.pageLayout.leftSideBarStyle.addRules(Map(
       "" -> """
