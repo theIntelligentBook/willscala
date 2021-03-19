@@ -13,6 +13,8 @@ updateOptions := updateOptions.value.withLatestSnapshots(false)
 libraryDependencies ++= Seq(
   "com.github.wbillingsley.veautiful" %%% "veautiful" % "v0.2-SNAPSHOT",
   "com.github.wbillingsley.veautiful" %%% "doctacular" % "v0.2-SNAPSHOT",
+  
+  "com.github.wbillingsley" % "lavamaze" % "v0.2-SNAPSHOT", // Need to single-% as it's a top-level jitpack project
 )
 
 val deployScript = taskKey[Unit]("Copies the fullOptJS script to deployscripts/")
