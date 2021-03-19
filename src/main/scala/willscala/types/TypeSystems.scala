@@ -172,22 +172,6 @@ val typeSystems = DeckBuilder(1920, 1080)
       JSCodable(Maze()((0,0), (0,0)) { _ => })(tilesMode = false)
     )
   ))
-  .markdownSlide("## Type hierarchies").withClass("center middle")
-  .markdownSlide(
-    """## Supertypes
-      |
-      |Let's define an unusual function and see what the type inferencer infers its type to be
-      |
-      |```scala
-      |def awkward(i:Int) = if i > 0 then "bigger" else false
-      |awkward // Int => Matchable
-      |```
-      |
-      |The type inferencer will look at the two halves of the `if` and look for a common supertye
-      |
-      |* An `Int` is 
-      |""".stripMargin
-  )
   .markdownSlide(
     """## Widening conversions
       |
@@ -224,14 +208,121 @@ val typeSystems = DeckBuilder(1920, 1080)
       |val dn:DogName = "Rosie"
       |```
       |
-      |(We'll meet more uses of `given` later, but this seems a simple way to introduce it.)
+      |""".stripMargin
+  )
+  .markdownSlide(
+    """## Extending a type
+      |
+      |Something that can be common in dynamic languages is to add methods to a type, even ones we would not normally
+      |think of extending such as Strings.
+      |
+      |```js
+      |String.prototype.evenLetters = function() {
+      |    let x = 0
+      |    for (c of this.toUpperCase()) {
+      |        let diff = c.charCodeAt(0) - 'A'.charCodeAt(0) - 1
+      |        if (diff % 2 == 0) {
+      |            x += 1
+      |        }
+      |    }
+      |    
+      |    return x
+      |}
+      |
+      |console.log("Hello".evenLetters())
+      |```
+      |
+      |However this can lead to bugs. Famous example: [Overriding the Array constructor in JS before 2007](https://bugzilla.mozilla.org/show_bug.cgi?id=376957) 
+      |
       |""".stripMargin
   )
   .markdownSlide(
     """## Typesafe extensions
       |
-      |...
+      |Context gives us a typesafe way of doing this. For instance, in Scala we could define
       |
+      |```scala
+      |extension (s:String)
+      |  def evenLetters:Int = s.count(c => c.charValue % 2 == 0)
+      |
+      |"Hello".evenLetters // 3
+      |```
+      |
+      |Internally, this produces a function taking the object being extended as a paramenter
+      |
+      |```scala
+      |evenLetters("Hello") // 3
+      |```
+      |
+      |In the JavaScript case, the array constructor was altered for all callers, whether or not they intended to.
+      |
+      |A Scala extension method just creates an additional method that is only used at call sites where it is in the 
+      |compiler context (e.g. imported).
+      |""".stripMargin
+  )
+  .markdownSlide(
+    """## Type parameters and extensions
+      |
+      |Extension methods can also take advantage of type parameters. 
+      |
+      |```scala
+      |extension (nums:Seq[Double])
+      |  def sd:Double = 
+      |    val mean = nums.sum / nums.length
+      |    val variance = nums.map(x => Math.pow(x - mean, 2)).sum / nums.length
+      |    Math.sqrt(variance)
+      |```
+      |
+      |Now if we have a list of doubles, we can get their standard deviation:
+      |
+      |```scala
+      |List(1.3, 2.7, 1.6, 2.9, 5.1).sd // about 1.34
+      |```
+      |
+      |But if we have a list of something else we'll get a compile error if we try to take their standard deviation
+      |
+      |```scala
+      |List("Algernon", "Bertie", "Cecily").sd // value sd is not a member of List[String].
+      |```
+      |
+      |But we could get a standard deviation of their lengths if we wanted...
+      |
+      |```scala
+      |List("Algernon", "Bertie", "Cecily").map(_.length.toDouble).sd
+      |```
+      |""".stripMargin
+  )
+  .markdownSlide(
+    """## Domain-Specific Languages
+      |
+      |Sometimes, this means it can be possible to define a domain-specific language for a particular purpose.
+      |For instance, in `build.sbt`, dependencies use strings separated by `%` characters - these are functions.
+      |
+      |Just as a game, let's make `"one" plus "one" equals "two"` evaluate to `true`
+      |
+      |```scala
+      |val strings = Seq("zero", "one", "two", "three", "four", "five")
+      |
+      |extension (s:String)
+      |  def value = strings.indexOf(s)
+      |
+      |  def plus(o:String):String =
+      |    strings(s.value + o.value) 
+      |
+      |"one" plus "one" equals "two"
+      |```
+      |
+      |Here, we've used another little bit of Scala syntactic sugar, that 
+      |
+      |```scala
+      |"one".plus("one")
+      |```
+      |
+      |can also be written
+      |
+      |```scala
+      |"one" plus "one"
+      |```
       |""".stripMargin
   )
   .markdownSlide(willCcBy).withClass("bottom")
