@@ -208,8 +208,31 @@ val typeSystems = DeckBuilder(1920, 1080)
   .markdownSlide(
     """## A conversion in the context...
       |
-      |How do we define what conversions are legitimate?
+      |Some languages (Haskell, Scala, and others) have the idea that there can be some *implicit* items - that is, 
+      |items that the compiler will find for you.
+      |
+      |In Scala, we can add extra items to the *context* using the `given` keyword. 
+      |
+      |To define a conversion we wish to consider legitimate, we can give Scala a conversion:
+      |
+      |```scala
+      |case class DogName(s:String)
+      |
+      |given Conversion[String, DogName] with
+      |  def apply(s:String) = new DogName(s)
+      |  
+      |val dn:DogName = "Rosie"
+      |```
+      |
+      |(We'll meet more uses of `given` later, but this seems a simple way to introduce it.)
       |""".stripMargin
-  )  
+  )
+  .markdownSlide(
+    """## Typesafe extensions
+      |
+      |...
+      |
+      |""".stripMargin
+  )
   .markdownSlide(willCcBy).withClass("bottom")
   .renderSlides

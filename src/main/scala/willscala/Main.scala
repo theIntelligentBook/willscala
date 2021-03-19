@@ -69,7 +69,10 @@ object Main {
       "4. Types" -> site.Toc(
         "Intro" -> site.addPage("types", types.typesIntro),
         "Type Systems" -> site.add("typeSystems",
-          Alternative("Type Systems", Deck(() => types.typeSystems)),
+          Alternative("Slide deck", Deck(() => types.typeSystems)),
+        ),
+        "Variance" -> site.add("variance",
+          Alternative("Slide deck", Deck(() => types.variance)),
         ),
       ),
       "5. Category theory" -> site.Toc(
