@@ -3,7 +3,7 @@ package willscala.imperative
 import com.wbillingsley.veautiful.templates._
 import willscala.Common._
 
-val introScala = DeckBuilder(1280, 720)
+val introScala = DeckBuilder(1920, 1080)
   .markdownSlide(
   """
     |# An imperative intro to Scala

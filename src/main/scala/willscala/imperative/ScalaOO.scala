@@ -4,7 +4,7 @@ import com.wbillingsley.veautiful.templates._
 import willscala.Common
 import willscala.Common.willCcBy
 
-val scalaOO = DeckBuilder(1280, 720)
+val scalaOO = DeckBuilder(1920, 1080)
   .markdownSlide(
     """
       |# Intro to Object Orientation in Scala
@@ -335,7 +335,7 @@ val scalaOO = DeckBuilder(1280, 720)
         |```
         |""".stripMargin)
   .markdownSlide("""
-      |### Applications
+      |## Applications
       |
       |In Java you might have
       |

@@ -208,7 +208,7 @@ val sideBySideStyling = Styling(
     |""".stripMargin).register()
 
 val streetTableStyling = Styling(
-  "background: #eee;"
+  "background: #eee; width: inherit;"
 ).modifiedBy(
   " td" ->
     """margin-right: 20px;

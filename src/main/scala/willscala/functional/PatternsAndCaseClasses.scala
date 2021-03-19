@@ -6,7 +6,7 @@ import willscala.styleSuite
 import willscala.Common
 import willscala.Common.{marked, willCcBy}
 
-val patternsAndCaseClasses = DeckBuilder(1280, 720)
+val patternsAndCaseClasses = DeckBuilder(1920, 1080)
   .markdownSlide(
     """
       |# Pattern Matching and Case Classes

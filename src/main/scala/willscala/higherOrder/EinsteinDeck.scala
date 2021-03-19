@@ -7,7 +7,7 @@ import willscala.Common
 import willscala.Common.{marked, willCcBy}
 
 
-val einsteinDeck = DeckBuilder(1280, 720)
+val einsteinDeck = DeckBuilder(1920, 1080)
   .markdownSlide(
     """
       |# Einstein's Puzzle, using higher order functions

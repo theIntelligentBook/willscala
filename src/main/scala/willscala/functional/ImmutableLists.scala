@@ -7,7 +7,7 @@ import willscala.styleSuite
 import willscala.Common
 import willscala.Common.{marked, willCcBy}
 
-val immutableLists = DeckBuilder(1280, 720)
+val immutableLists = DeckBuilder(1920, 1080)
   .markdownSlide(
     """
       |# Immutable Lists

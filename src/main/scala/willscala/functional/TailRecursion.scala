@@ -71,7 +71,7 @@ def example3 = <.div(
      |""".stripMargin)
 )
 
-val tailRecursion = DeckBuilder(1280, 720)
+val tailRecursion = DeckBuilder(1920, 1080)
   .markdownSlide(
     """
       |# Recursion and the Stack

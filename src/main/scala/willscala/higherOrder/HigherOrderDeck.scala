@@ -6,7 +6,7 @@ import willscala.styleSuite
 import willscala.Common
 import willscala.Common.{marked, willCcBy}
 
-val higherOrderDeck = DeckBuilder(1280, 720)
+val higherOrderDeck = DeckBuilder(1920, 1080)
   .markdownSlide(
     """
       |# Higher Order Functions
