@@ -71,8 +71,8 @@ object Main {
         "Type Systems" -> site.add("typeSystems",
           Alternative("Slide deck", Deck(() => types.typeSystems)),
         ),
-        "Variance" -> site.add("variance",
-          Alternative("Slide deck", Deck(() => types.variance)),
+        "Type Relationships" -> site.add("typeRelationships",
+          Alternative("Slide deck", Deck(() => types.typeRelationships)),
         ),
       ),
       "5. Category theory" -> site.Toc(
