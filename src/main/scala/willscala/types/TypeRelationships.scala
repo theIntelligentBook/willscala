@@ -24,7 +24,7 @@ val typeRelationships = DeckBuilder(1920, 1080)
         |awkward // Int => Matchable
         |```
         |
-        |The type inferencer will look at the two halves of the `if` and look for a common supertype. 
+        |The type inferencer will look at the two halves of the `if` and look for a common supertype.
         |
         |`Matchable` is quite near the top, but the topmost type is `Any`. We can get that by using a type that isn't
         |a subtype of `Matchable`. `IArray` is an immutable array that can't be used safely in match expressions:
@@ -61,11 +61,11 @@ val typeRelationships = DeckBuilder(1920, 1080)
   .markdownSlide(
     """## Path dependent types
       |
-      |We can define traits and classes inside an object. In Scala, these make the inner types *path dependent* because 
+      |We can define traits and classes inside an object. In Scala, these make the inner types *path dependent* because
       |the nested types depend on the value they are contained within.
       |
-      |This site uses an example. It's built on a library *Doctacular* in which each site keeps has some "routes" to 
-      |know how to map URLs to pages to display. You can have the situation that there's more than one site in 
+      |This site uses an example. It's built on a library *Doctacular* in which each site keeps has some "routes" to
+      |know how to map URLs to pages to display. You can have the situation that there's more than one site in
       |the library, each with its own set of routes.
       |But you can't accidentally ask one site to navigate to another site's route.
       |
@@ -77,7 +77,7 @@ val typeRelationships = DeckBuilder(1920, 1080)
       |  sealed trait Route
       |  case object Home extends Route
       |  case class Page(name:String) extends Route
-      |  
+      |
       |  def routeTo(r:Route):Unit = ???
       |
       |val siteA = Site()
@@ -99,7 +99,7 @@ val typeRelationships = DeckBuilder(1920, 1080)
       |* Tuples, e.g. `(Int, String)`
       |* Records or classes, e.g. `case class Dog(name:String, age: Int)`
       |
-      |Note, though, that the types we're seeing so far have an order to them and are not commutative. 
+      |Note, though, that the types we're seeing so far have an order to them and are not commutative.
       |`(Int, String)` is a product of an `Int` and a `String`, but it is not the same as `(String, Int)`.
       |
       |""".stripMargin
@@ -110,7 +110,7 @@ val typeRelationships = DeckBuilder(1920, 1080)
       |If a *product* type contains both types, a *sum* type contains one or the other.
       |
       |One kind that we've already come across is `enum`s.
-      | 
+      |
       |```scala
       |enum Pet:
       |  case Bird, Cat, Dog, Horse, Fish
@@ -120,7 +120,7 @@ val typeRelationships = DeckBuilder(1920, 1080)
       |A pet is a bird *or* a cat *or* a dog *or* a horse *or* a fish, *or* some other named Animal.
       |
       |Scala also has a class `Either[L, R]` that is sometimes used in older libraries. It is *either* `Left(ofTypeL)`
-      |or `Right(ofTypeR)`. 
+      |or `Right(ofTypeR)`.
       |
       |```scala
       |val l:Either[Int, String] = Left(3)
@@ -129,7 +129,7 @@ val typeRelationships = DeckBuilder(1920, 1080)
       |
       |Where `(L, R)` is the product of two types, `Either[L, R]` is the sum of two types.
       |
-      |Note, though, that the types we're seeing so far have an order to them and are not commutative. 
+      |Note, though, that the types we're seeing so far have an order to them and are not commutative.
       |`Either[Int, String]` is a sum of an `Int` and a `String`, but it is not the same as `Either[String, Int]`.
       |
       |""".stripMargin
@@ -138,10 +138,10 @@ val typeRelationships = DeckBuilder(1920, 1080)
     """## Union types
       |
       |`Either[L, R]` is not `Either[R, L]`. Which is a pain, because sometimes we just want to say "one or the other"
-      |and don't want to have to remember which is a `Left` and which is a `Right`. And maybe somewhere else we 
+      |and don't want to have to remember which is a `Left` and which is a `Right`. And maybe somewhere else we
       |want to define the union of that with something else...
       |
-      |From Scala 3, we can define *union types*. Here's a little example with cards: 
+      |From Scala 3, we can define *union types*. Here's a little example with cards:
       |
       |```
       |enum FaceCard:
@@ -185,7 +185,7 @@ val typeRelationships = DeckBuilder(1920, 1080)
       |
       |In that call to *div*, we've got an attribute setting, an `h1` node, a plain `String`, and a `Seq` of nodes.
       |If we let the inferencer choose a common supertype, it'd go all the way up to `Matchable`.
-      | 
+      |
       |Instead, what I have (simplified here) is define a union type:
       |
       |```scala
@@ -209,10 +209,10 @@ val typeRelationships = DeckBuilder(1920, 1080)
       |```scala
       |trait Writeable[T]:
       |  def write(data:T):Unit
-      |  
+      |
       |trait Readable[T]:
       |  def read():T
-      |  
+      |
       |type ReadWrite[T] = Readable[T] & Writeable[T]
       |```
       |
@@ -241,7 +241,7 @@ val typeRelationships = DeckBuilder(1920, 1080)
       |
       |When we asked *"Is a list of cats a list of animals?"* we probably thought *"Yes, it sounds like it should be"*.
       |
-      |And yes it is. 
+      |And yes it is.
       |
       |List is defined as *covariant*. Let's make up our own simplified one:
       |
@@ -249,11 +249,11 @@ val typeRelationships = DeckBuilder(1920, 1080)
       |enum MyList[+T]:
       |  case Nil
       |  case Cons(head:T, tail:MyList[T])
-      |  
-      |  def count:Int = this match 
+      |
+      |  def count:Int = this match
       |    case Nil => 0
       |    case Cons(h, t) => t.count + 1
-      |  
+      |
       |import MyList._
       |```
       |
@@ -261,23 +261,23 @@ val typeRelationships = DeckBuilder(1920, 1080)
       |
       |If cats are a subtype of animal, then `MyList`s of cats are a subtype of `MyList`s of animal.
       |
-      |Note: With the import, we've *shadowed* `Nil` from Scala's list type - that is, when we refer to `Nil` later in 
-      |this file, the the compiler will understand we mean `MyList.Nil` not `List.Nil`. 
+      |Note: With the import, we've *shadowed* `Nil` from Scala's list type - that is, when we refer to `Nil` later in
+      |this file, the the compiler will understand we mean `MyList.Nil` not `List.Nil`.
       |
       |""".stripMargin
   )
   .markdownSlide(
     """## Covariance
       |
-      |Let's put the cats in 
+      |Let's put the cats in
       |
       |```scala
       |trait Animal
       |case class Cat(name:String) extends Animal
       |
-      |def even(animals:MyList[Animal]):Boolean = 
+      |def even(animals:MyList[Animal]):Boolean =
       |  animals.count % 2 == 0
-      |  
+      |
       |val cats = Cons(Cat("Shyla"), Cons(Cat("Macavity"), Nil)) // :MyList[Cat]
       |even(cats) // true - yes, this works
       |```
@@ -293,15 +293,15 @@ val typeRelationships = DeckBuilder(1920, 1080)
       |enum MyList[+T]:
       |  case Nil
       |  case Cons(head:T, tail:MyList[T])
-      |  
-      |  def count:Int = this match 
+      |
+      |  def count:Int = this match
       |    case Nil => 0
       |    case Cons(h, t) => t.count + 1
-      |  
+      |
       |import MyList._
       |```
       |
-      |`MyList.Nil` is an *object* representing all empty lists. We know there's nothing in it, but to the compiler 
+      |`MyList.Nil` is an *object* representing all empty lists. We know there's nothing in it, but to the compiler
       |what type is it a list of?
       |
       |```scala
@@ -324,9 +324,9 @@ val typeRelationships = DeckBuilder(1920, 1080)
       |```scala
       |val cats:Array[Cat] = Array(Cat("Shyla"), Cat("Macavity"), Cat("Scarface Claw"))
       |
-      |def insertRosie(arr:Array[Animal]):Unit = 
+      |def insertRosie(arr:Array[Animal]):Unit =
       |  arr(1) = Dog("Rosie")
-      |  
+      |
       |insertRosie(cats) // Compile error. Found Array[Cats]. Required Array[Animal]
       |```
       |
@@ -348,7 +348,7 @@ val typeRelationships = DeckBuilder(1920, 1080)
       |```scala
       |enum Food:
       |  case Soup, Gravy
-      |  
+      |
       |class StainRemover[-F]():
       |  def remove(f:F):Unit = ???
       |```
@@ -356,9 +356,9 @@ val typeRelationships = DeckBuilder(1920, 1080)
       |I've declared this as *contravariant* in type `F`. Why?
       |
       |* An all-purpose food-stain remover is a soup-stain remover - it'll get rid of my soup stain.
-      |* But if I ask for a food-stain remover, and they give me a gravy-stain remover, I wouldn't be happy (It won't 
+      |* But if I ask for a food-stain remover, and they give me a gravy-stain remover, I wouldn't be happy (It won't
       |  work on my soup stain).
-      |  
+      |
       |So we have a contravariant relationship.
       |
       |* `Soup` is a (subtype of) `Food`.
@@ -370,7 +370,7 @@ val typeRelationships = DeckBuilder(1920, 1080)
   .markdownSlide(
     """## Covariant and Contravariant position
       |
-      |The error you are most likely to see from the compiler has text that reads like 
+      |The error you are most likely to see from the compiler has text that reads like
       |
       |> covariant type T appears in contravariant position
       |
@@ -380,12 +380,12 @@ val typeRelationships = DeckBuilder(1920, 1080)
       |enum MyList[+T]:
       |  case Nil
       |  case Cons(head:T, tail:MyList[T])
-      |  
+      |
       |  def contains(item:T):Boolean = ??? // Compile error. covariant type T appears in contravariant position
       |```
       |
       |This might make more sense if we look at the type definition of Function1 (a function with 1 argument):
-      | 
+      |
       |```scala
       |trait Function1[-T1, +R]
       |```
@@ -405,7 +405,7 @@ val typeRelationships = DeckBuilder(1920, 1080)
       |```
       |
       |In their inputs, they work like stain removers (contravariant):
-      | 
+      |
       |* A function accepting any food is a function that accepts gravy.
       |* A function accepting only gravy is not a function that accepts any food
       |
@@ -424,14 +424,14 @@ val typeRelationships = DeckBuilder(1920, 1080)
       |enum MyList[+T]:
       |  case Nil
       |  case Cons(head:T, tail:MyList[T])
-      |  
-      |  def contains[B](item:B):Boolean = this match 
+      |
+      |  def contains[B](item:B):Boolean = this match
       |    case Cons(h, _) if item == h => true
       |    case Cons(_, t) => t.contains(item)
       |    case Nil => false
       |```
       |
-      |By giving it its own type parameter, we broke away from `MyList[T]` needing to accept `T`s as an input, 
+      |By giving it its own type parameter, we broke away from `MyList[T]` needing to accept `T`s as an input,
       |solving the contravariant position problem.
       |
       |
@@ -446,8 +446,8 @@ val typeRelationships = DeckBuilder(1920, 1080)
       |enum MyList[+T]:
       |  case Nil
       |  case Cons(head:T, tail:MyList[T])
-      |  
-      |  def contains[B >: T](item:B):Boolean = this match 
+      |
+      |  def contains[B >: T](item:B):Boolean = this match
       |    case Cons(h, _) if item == h => true
       |    case Cons(_, t) => t.contains(item)
       |    case Nil => false
@@ -470,8 +470,8 @@ val typeRelationships = DeckBuilder(1920, 1080)
   .markdownSlide(
     """## Upper type bounds
       |
-      |*Upper type-bounds* mean we're only allowing subtypes. 
-      |Let's model the nineteenth century English card game "Happy Families". 
+      |*Upper type-bounds* mean we're only allowing subtypes.
+      |Let's model the nineteenth century English card game "Happy Families".
       |
       |In the deck, there are eleven families, each of which (by nineteenth century coincidence) has four members: "Mr", "Mrs", "Master", and "Miss".
       |You each have a hand of five random cards. If you have one card from a *family* (say, Mrs Bun the Baker), you can ask
@@ -488,35 +488,53 @@ val typeRelationships = DeckBuilder(1920, 1080)
       |  case Bung(t:Title)
       |  case Chip(t:Title)
       |```
+      |
+      |Each family is now a different subtype of `HappyFamily`.
+      |
       |""".stripMargin)
-  .markdownSlide(
-    """## Without an upper type bound
-      |
-      |Let's create a function `askFor` that takes a card of a particular family, and returns some number of
-      |cards from the same family.
-      |
-      |If we want to express this without the type constraint, it'd just be a filter:
-      |
-      |```scala
-      |case class Hand(cards:Seq[HappyFamily]):
-      |  def askFor(card:HappyFamily):Seq[HappyFamily] = 
-      |    cards.filter({ c => c.ordinal == card.ordinal })
-      |```
-      |
-      |We take a card, we give back some cards.
-      |The families are members of an 'enum', so we can just check if the ordinal values match.
-      |
-      |Under normal circumstances, this would be absolutely fine.
-      |
-      |But *just to show we can*, let's try expressing the fact the cards are from the same family in the type
-      |signature.
-      |""".stripMargin
-  )
   .markdownSlide(
     """## Upper type bounds
       |
-      |So we can talk about type bounds, let's try to express the type constraint that the returned cards are all
-      |from the same family in the function signature.
+      |Let's create a function that will check an `Array[HappyFamily]` for whether it contains two children
+      |
+      |```scala
+      |def twoChildren(cards:Array[HappyFamily]):Boolean = {
+      |  cards.count(c => c.title == Master || c.title == Miss) >= 2
+      |}
+      |```
+      |
+      |So far so good, but we may run into the problem of Array being invariant:
+      | 
+      |```scala
+      |val theBuns = Array[Bun](Bun(Mr), Bun(Mrs), Bun(Master), Bun(Miss)) 
+      |twoChildren(theBuns) // Compile error. Found Array[HappyFamily.Bun]. Required Array[HappyFamily]
+      |```
+      |
+      |An array of Buns is not an array of Happy Families!
+      |
+      |We know we don't modify the array in `twoChildren`, so one solution would be to say it doesn't take 
+      |"an array of happy family cards", it takes "an array of any type F, where F is a subtype of happy family" 
+      |
+      |```scala
+      |def twoChildren[F <: HappyFamily](cards:Array[F]):Boolean = {
+      |  cards.count(c => c.title == Master || c.title == Miss) >= 2
+      |}
+      |```
+      |
+      |Now, even though *Array* is invariant in its contents, *our function* is happy to take an Array for any subtype -
+      |so long as it's a subtype of `HappyFamily` and it can get the cards' titles.
+      |""".stripMargin
+  )
+  .markdownSlide("## Type erasure").withClass("center middle")
+  .markdownSlide(
+    """## Type erasure
+      |
+      |Type parameters are only known by the compiler. At runtime, they are *erased*.
+      |This means we can't (easily) check a type parameter at run-time, e.g. in a pattern match.
+      |
+      |Hold in your mind that *this isn't going to work*, but let's try to express the type constraint that 
+      |if you ask "have you got any X" (e.g. Buns or Blocks), all the cards you are returned will be from the same
+      |family.
       |
       |```scala
       |import Title._
@@ -528,41 +546,43 @@ val typeRelationships = DeckBuilder(1920, 1080)
       |
       |We've said that type `F` is some subtype of `HappyFamily` and we will return a sequence *of the same subtype*.
       |
-      |i.e. we've said we'll guaruntee any cards you get back are from the same family as the one you gave us.
+      |We'd hit two problems:
       |
-      |However, we'd need lots of clever machinery to be able to implement this function!
+      |* If we just say `askFor(card)`, the compiler might only know that the variable card is of type `HappyFamily`, not which family it contains.
+      |  In which case we'd just have `askFor[HappyFamily](card:HappyFamily):Seq[HappyFamily]` anyway
+      |  
+      |* At runtime, the type parameters are erased, so the runtime behaviour is
+      |  `askFor(card:HappyFamily):Seq`
+      |
       |""".stripMargin
   )
   .markdownSlide(
     """## Type erasure
       |
-      |The first problem we'll run into is type erasure. Although the *compiler* knows all our type parameters,
-      |they are *erased* at runtime - the runtime only knows about concrete types.
-      |
-      |Let's take our Happy Families hand and just implement a function called `sameFamily` to see if one of our
-      |cards is from the same family
+      |Let's show you the warning we get in pattern matches on type parameters. Let's just implement a function called 
+      |`sameFamily` to see if one of our cards is from the same family
       |
       |```scala
       |case class Hand(cards:Seq[HappyFamily]):
-      |  def sameFamily[F <: HappyFamily](card:C, myCard:HappyFamily):Boolean = 
-      |    myCard match 
+      |  def sameFamily[F <: HappyFamily](card:C, myCard:HappyFamily):Boolean =
+      |    myCard match
       |      case c:F => true
       |      case _ => false
       |```
       |
-      |This *looks* like it should work. Check the type and see if it's the same family:
+      |The warning we will get is:
       |
       |> the type test for F cannot be checked at runtime
       |""".stripMargin)
   .markdownSlide(
     """## Type erasure
       |
-      |The problem here is that the *compiler* knows all about our type `F` and its bound, but at *runtime* all the 
+      |Again, the problem here is that the *compiler* knows all about our type `F` and its bound, but at *runtime* all the
       |type parameters are forgotten, and our code is effectively "erased" down to:
       |
       |```scala
       |case class Hand(cards:Seq):
-      |  def sameFamily(card:HappyFamily, myCard:HappyFamily):Boolean = 
+      |  def sameFamily(card:HappyFamily, myCard:HappyFamily):Boolean =
       |    myCard match
       |      case c:HappyFamily => true
       |      case _ => false
@@ -574,109 +594,35 @@ val typeRelationships = DeckBuilder(1920, 1080)
   .markdownSlide(
     """## A simple solution
       |
-      |Although at runtime we don't know the *type* F, we do still have the card we were passed and the cards we're
-      |looking at in scope. It won't get rid of the type warning, but we could refine our pattern match:
+      |Although at runtime we don't know the *type* F, we do have the card we were passed and the cards we're
+      |looking at in scope. We can just check the value parameter rather than the type parameter:
       |
       |```scala
       |case class Hand(cards:Seq):
-      |  def sameFamily(card:HappyFamily, myCard:HappyFamily):Boolean = 
-      |    myCard match
-      |      case c:HappyFamily if c.ordinal == card.ordinal => true
-      |      case _ => false
+      |  def sameFamily(card:HappyFamily, myCard:HappyFamily):Boolean =
+      |    c.ordinal == card.ordinal
       |```
       |
-      |Don't forget - we don't have to go chasing super-tight type bounds. We can keep things simple.
+      |Don't forget - programming is not always about being super-clever.
       |
-      |But this is a demo, so let's try out some clever machinery
-      |""".stripMargin
-  )
-  .markdownSlide(
-    """## Context parameters
-      |
-      |Let's show you a super-powered solution that will look like magic until we've talked more about context.
-      |
-      |It so happens, that in this case we could solve the issue by asking the compiler to *create an extra parameter* 
-      |for us, that will do the type test at runtime.
-      |
-      |```scala
-      |import scala.reflect.TypeTest
-      |
-      |case class Hand(cards:Seq[HappyFamily]):
-      |  def sameFamily[F <: HappyFamily](card:C, myCard:HappyFamily)(using TypeTest[HappyFamily, C]):Boolean = 
-      |    myCard match 
-      |      case c:F => true
-      |      case _ => false
-      |```
-      |
-      |The `using` keyword asks the compiler to find a paramater for us.
-      |
-      |* `given` adds something to the context
-      |* `using` indicates a parameter will come from the context
-      |
-      |In this case, the compiler is capable of *generating* the type test automatically:
-      |For example, a type test for `Bun` just has to ask if this item is of concrete type `Bun`.
-      |""".stripMargin)
-  .markdownSlide(
-    """## Why context parameters work
-      |
-      |Type erasure removes the type parameters, *but not the value parameters*.
-      |
-      |* If we say we pass a type parameter, `[F]`, it is erased.
-      |* If we say we pass a value parameter, `(typeTest:TypeTest), we do pass that value.
-      |
-      |By passing a type tests as a value, the compiler will change our match from a test against the type parameter
-      |to a function call on the `TypeTest` value we passed.
-      |
-      |Effectively, it now erases to:
-      |
-      |```scala
-      |  def sameFamily(card:HappyFamily, myCard:HappyFamily)(using typeTest:TypeTest):Boolean = 
-      |    myCard match 
-      |      case c if typeTest(c).nonEmpty => true
-      |      case _ => false
-      |```
-      |
-      |```scala
-      |val hand = Hand(Seq(Bun(Mr), Block(Mrs), Bun(Master), Chip(Miss))
-      |hand.sameFamily(Bun(Mrs), hand.card(0)) // true
-      |```
-      |
-      |Because the `TypeTest` value it generates *is the one for Buns*, it will correctly determine if it was a Bun.
+      |When we say "we always return a sequence of the same family", at compile-time we won't often know which that
+      |family is. We'll tend to be passing values like `card:HappyFamily` not `card:Bun`. 
       |
       |""".stripMargin
   )
   .markdownSlide(
-    """## Collect
+    """## A practical version of `askFor`
       |
-      |We're now just about in a position to implement `askFor`. We'll use the `collect` function, which takes 
-      |a *partial function* (an incomplete pattern match) and keeps anything that was matched.
-      |
-      |```scala
-      |  def askFor[C <: HappyFamily](card:C, myCard:HappyFamily)(using typeTest:TypeTest[HappyFamily, C]):Seq[C] = 
-      |    cards.collect({ case c:C => c })
-      |```
+      |So, practically speaking, a straighforward way to model the process where you ask for a card would just be
       |
       |```scala
-      |val hand = Hand(Seq(Bun(Mr), Block(Mrs), Bun(Master), Chip(Miss))
-      |hand.askFor(Bun(Mrs)) // :Seq[Bun]   Seq(Bun(Mr), Bun(Master))
+      |case class Hand(cards:Seq):
+      |  def askFor[HappyFamily](card:HappyFamily):Seq[HappyFamily] =
+      |    cards.filter(_.ordinal == card.ordinal)
       |```
       |
-      |It turns out very short, but we've had the compiler do some clever things for us.
-      |
-      |""".stripMargin
-  )
-  .markdownSlide(
-    """## Practicality
-      |
-      |I've shown you a lot of machinery, that we can use if we want to keep our type-checking very tight.
-      |
-      |But it's a trade-off - there's probably nothing wrong with saying that `askFor` takes a card and returns
-      |a sequence of cards. In which case we don't need all this machinery.
-      |
-      |```scala
-      |  def askFor(card:HappyFamily):Seq[HappyFamily] = 
-      |    cards.filter({ c => c.ordinal == card.ordinal })
-      |```
+      |We haven't expressed the type-constraint that the cards you get back are the same family, but as we'll normally
+      |use this from code where at compile-time we don't know which family the card is, that probably doesn't matter.
       |
       |""".stripMargin
   )
