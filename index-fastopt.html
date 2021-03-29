@@ -14,6 +14,17 @@
     <link rel="stylesheet" href="wren.css" />
 </head>
 <body>
+
+    <script>
+        // ace.js editor needs this to make text selections work in Chrome (otherwise it can't calculate scale correctly)
+        document.documentElement.style.zoom = 1
+
+        // As we're not hosting the Lava Maze images, we need to tell the Lava Maze library where to get them from
+        lavaSettings = {
+            imageBase: "https://www.wbillingsley.com/lavamaze/"
+        }
+    </script>
+
     <div id="render-here">
         <p>Loading. This site has been tested with Chrome, Safari, and Firefox.</p>
     </div>

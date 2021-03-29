@@ -148,127 +148,71 @@ val typeclasses = DeckBuilder(1920, 1080)
       |""".stripMargin
   )
   .markdownSlide(
-    """
-      |
-      |### Multiplication
+    """## Multiplication
       |
       |I suspect you've noticed:
       |
-      |--
-      |
       |* 1 * x == x
-      |
-      |--
-      |
       |* x * 1 == 1
-      |
-      |--
       |
       |Let's call 1 the *identity element* for multiplication
       |
       |""".stripMargin
   )
   .markdownSlide(
-    """
-      |
-      |### Multiplication
+    """## Multiplication
       |
       |I suspect you've noticed:
       |
-      |--
-      |
       |* (2 \* 3) \* 4 == 6 * 4 == 24
-      |
-      |--
-      |
       |* 2 \* (3 \* 4) == 2 * 12 == 24
-      |
-      |--
       |
       |In fact, 
       |
       |* (a \* b) \* c == a \* (b \* c)
       |
-      |--
-      |
       |So much so that we can leave the parentheses off and just write
       |
       |* a \* b \* c
-      |
-      |--
       |
       |Multiplication over integers is *associative*
       |
       |""".stripMargin
   )
   .markdownSlide(
-    """
-      |
-      |### We could do this for addition too
+    """## We could do this for addition too
       |
       |I suspect you've noticed:
       |
-      |--
-      |
       |* 0 + x == x
-      |
-      |--
-      |
       |* x + 0 == x
-      |
-      |--
       |
       |Let's call 0 the *identity element* for addition
       |
       |""".stripMargin
   )
   .markdownSlide(
-    """
-      |
-      |### Addition
-      |
+    """## Addition
       |
       |I suspect you've noticed:
       |
-      |--
-      |
       |* (2 + 3) + 4 == 5 + 4 == 9
-      |
-      |--
-      |
       |* 2 + (3 + 4) == 2 + 7 == 9
-      |
-      |--
       |
       |In fact, 
       |
       |* (a + b) + c == a + (b + c)
       |
-      |--
-      |
       |So much so that we can leave the parentheses off and just write
       |
       |* a + b + c
-      |
-      |--
       |
       |Addition over integers is *associative*
       |
       |""".stripMargin
   )
   .markdownSlide(
-    """
-      |
-      |class: centre, middle
-      |
-      |### News is, we can do this for some types and functions too...
-      |
-      |""".stripMargin
-  )
-  .markdownSlide(
-    """
-      |
-      |### Concatenation for Lists
+    """## We could also do this for `List[T]`
       |
       |Concatenation uses the `++` operator:
       |
@@ -278,43 +222,24 @@ val typeclasses = DeckBuilder(1920, 1080)
       |
       |You might have noticed:
       |
-      |--
-      |
       |* List.empty ++ listA == listA
-      |
-      |--
-      |
       |* listA ++ List.empty == listA
       |
-      |--
-      |
       |Let's call the empty list the *identity element* for list concatenation
-      |
       |
       |""".stripMargin
   )
   .markdownSlide(
-    """
-      |
-      |### Concatenation for Lists
+    """## Concatenation for Lists
       |
       |You might have noticed:
       |
-      |--
-      |
       |* (List(1, 2) ++ List(3, 4)) ++ List(5, 6) == List(1, 2, 3, 4, 5, 6)
-      |
-      |--
-      |
       |* List(1, 2) ++ (List(3, 4) ++ List(5, 6)) == List(1, 2, 3, 4, 5, 6)
-      |
-      |--
       |
       |in fact, 
       |
       |* (listA ++ listB) + listC == listA + (listB ++ listC)
-      |
-      |--
       |
       |So much so we can just drop the brackets and say
       |
@@ -324,32 +249,25 @@ val typeclasses = DeckBuilder(1920, 1080)
       |""".stripMargin
   )
   .markdownSlide(
-    """
-      |
-      |### What do these have in common
+    """## What do these have in common
       |
       |* *addition* over *integers* with *zero* as an identity element
       |* *multiplication* over *integers* with *one* as an identity element
       |* *concatenation* over *lists* with *the empty list (Nil)* as an identity element
       |
-      |--
-      |* *concatenation* over *strings* with `""` as an identity element
+      |We could also add:
       |
-      |--
+      |* *concatenation* over *strings* with `""` as an identity element
       |
       |They're all *associative*, but that doesn't capture the part about   
       |*identity + x == x == x + identity*
-      |
-      |--
       |
       |Let's give them a name. Let's call them ***monoids***
       |
       |""".stripMargin
   )
   .markdownSlide(
-    """
-      |
-      |### Monoids
+    """## Monoids
       |
       |What we need for a monoid:
       |
@@ -357,7 +275,6 @@ val typeclasses = DeckBuilder(1920, 1080)
       |* An identity element. Let's call it `mempty` for the slide
       |* An operation that takes two arguments of type `T`. Let's call it `<>` for the slide.
       |
-      |--
       |
       |And these rules
       |
@@ -376,39 +293,58 @@ val typeclasses = DeckBuilder(1920, 1080)
       |""".stripMargin
   )
   .markdownSlide(
-    """
+    """## Monoid as a typeclass
       |
-      |### In Haskell
+      |Typeclasses give us a way of expressing these. Let's define two traits.
       |
-      |```haskell
-      |class Monoid a where
-      |    mempty  :: a
-      |    mappend :: a -> a -> a
+      |The first is `Semigroup[T]`, a typeclass expressing the concatenation. 
+      |Then, `Monoid[T]` as a typeclass for semigroups that also adds `mempty`
       |
-      |    mconcat :: [a] -> a
-      |    mconcat = foldr mappend mempty
+      |```scala
+      |trait Semigroup[T]:
+      |  extension (item:T) def <>(other:T): T
+      |
+      |trait Monoid[T] extends Semigroup[T]:
+      |  def mempty:T
       |```
-      |
-      |--
       |
       |Things to point out:
       |
       |* The type system can't enforce the laws (left identity, right identity, associativity)
-      |
-      |--
-      |
       |* It's a typeclass 
-      |
-      |--
-      |
-      |* mconcat...
       |
       |""".stripMargin
   )
   .markdownSlide(
-    """
+    """## Defining some monoids
       |
-      |### mconcat
+      |Let's provide the evidence that `Int` addition is a monoid:
+      |
+      |```scala
+      |given intAddition:Monoid[Int] with
+      |  def mempty = 0
+      |  extension (item:Int) def <>(other:Int) = item + other
+      |```
+      |
+      |Or, we could provide the evidence that `Int` multiplication is a monoid:
+      |
+      |```scala
+      |given intMultiplication:Monoid[Int] with
+      |  def mempty = 1
+      |  extension (item:Int) def <>(other:Int) = item * other
+      |```
+      |     
+      |Or, list append:
+      |
+      |```scala
+      |given listAppend[T]:Monoid[List[T]] with 
+      |  def mempty = Nil
+      |  extension (item:List[T]) def <>(other:List[T]) = item ++ other
+      |```
+      |
+      |""".stripMargin)
+  .markdownSlide("""
+      |## Defining a `combineAll`
       |
       |Suppose we have
       |
@@ -428,44 +364,77 @@ val typeclasses = DeckBuilder(1920, 1080)
       |(((((0 + a) + b) + c) + d) + e)
       |```
       |
-      |--
-      |
       |It looks like it ought to be possible to say something like
       |
       |```
       |List(a, b, c, d, e).foldLeft(mempty)(<>)
       |```
+      |""".stripMargin
+  )
+  .markdownSlide(
+    """## `combineAll`
+      |
+      |So, let's define an extension that we could apply to any monoid
+      |
+      |```scala
+      |extension [M : Monoid] (list:List[M]) 
+      |  def combineAll:M = list.foldLeft(summon[Monoid[M]].mempty)(_ <> _)
+      |```
+      |
+      |It's a slightly convoluted piece of syntax, but we just expressed a lot:
+      |
+      |* For some `Monoid` `M`, if we have a `List[M]`
+      |* We define an extension method `mconcat` that will fold across the list, starting with the `mempty` value, 
+      |  and combining everything using that monoid's `<>` operator.
+      |  
+      |The `summon` keyword summons the Monoid implementation from the context. We need to do that because we defined
+      |`mempty` as a method on it, rather than an extension method.
+      |
+      |```scala
+      |trait Semigroup[T]:
+      |  extension (item:T) def <>(other:T): T
+      |
+      |trait Monoid[T] extends Semigroup[T]:
+      |  def mempty:T
+      |```
+      |""".stripMargin
+  )
+  .markdownSlide(
+    """## `combineAll`
+      |
+      |Now that we have our definition in place
+      |
+      |```scala
+      |extension [M : Monoid] (list:List[M]) 
+      |  def combineAll:M = list.foldLeft(summon[Monoid[M]].mempty)(_ <> _)
+      |```
+      |
+      |We can use it on different monoids:
+      |
+      |```scala
+      |// Int multiplication
+      |List(1, 2, 3, 4).combineAll(using intMultiplication)
+      |
+      |// Int addition
+      |List(1, 2, 3, 4).combineAll(using intAddition)
+      |
+      |// List append - there's only one given to find, so we can skip the using parameter
+      |List(List(1), List(2, 3), List(4, 5, 6)).combineAll
+      |```
       |
       |""".stripMargin
   )
   .markdownSlide(
-    """
+    """## Summary
       |
-      |### mconcat
-      |
-      |And that's what Haskell does, except using fold right instead of left. 
-      |
-      |```
-      |    mconcat :: [a] -> a
-      |    mconcat = foldr mappend mempty
-      |```
-      |
-      |--
-      |
-      |But remember, `mappend` is associative, so it doesn't matter where we put the brackets. So whether we use `foldl` or `foldr` doesn't matter.
-      |
-      |""".stripMargin
-  )
-  .markdownSlide(
-    """
-      |
-      |### Summary
+      |With typeclasses, we can express properties about types that *don't otherwise relate to each other*. 
+      |`List[T]` is not a subclass of `Int`, but we expressed how `List` append and `Int` addition are both monoids.
       |
       |* Monoids are a type, an operation, and an identity element such that the monoid laws hold
       |
       |* Monoids let us compose operations without worrying about the order of the brackets.
       |
-      |* That's a nice property -- just knowing things compose well -- so often we'd like operations to be monoid-like
+      |That's a nice property (knowing things compose well) so we'd often like operations to be monoid-like
       |
       |""".stripMargin
   )
