@@ -8,7 +8,7 @@ import willscala.templates.Topic
 import scala.scalajs.js
 
 val catTheoryIntro = unique(<.div(
-  chapterHeading(4, "Category Theory", "images/typeclasses.png"),
+  chapterHeading(5, "Category Theory", "images/typeclasses.png"),
   marked("""
            |Some terms in functional programming come from a branch of mathematics called *Category Theory*.
            |For instance, monoid, monad, functor, and applicative. In this chapter, we're going to take a brief

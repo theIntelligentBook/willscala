@@ -83,9 +83,11 @@ object Main {
         "Intro" -> site.addPage("cattheory", cattheory.catTheoryIntro),
         "Typeclasses and Monoids" -> site.add("typeclasses",
           Alternative("Slide deck", Deck(() => cattheory.typeclasses)),
+          Alternative("Watch the video", Video(() => PlayableVideo(Echo360Video("c2abd869-f323-467f-9bf0-3aa1e2559da7")))),
         ),
       ),
       "6. Futures and effects" -> site.Toc(
+        "Intro" -> site.addPage("futures", futuresandeffects.futuresIntro),
       ),
       "7. Lazy, strict, and by-name" -> site.Toc(
       ),
