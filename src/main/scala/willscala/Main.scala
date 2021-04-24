@@ -91,6 +91,9 @@ object Main {
         "Futures and Promises" -> site.add("futuresandpromises",
           Alternative("Slide deck", Deck(() => futuresandeffects.futuresDeck)),
         ),
+        "Tasks" -> site.add("tasks",
+          Alternative("Slide deck", Deck(() => futuresandeffects.tasksDeck)),
+        ),
       ),
       "7. Lazy, strict, and by-name" -> site.Toc(
       ),
