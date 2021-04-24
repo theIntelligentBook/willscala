@@ -88,6 +88,9 @@ object Main {
       ),
       "6. Futures and effects" -> site.Toc(
         "Intro" -> site.addPage("futures", futuresandeffects.futuresIntro),
+        "Futures and Promises" -> site.add("futuresandpromises",
+          Alternative("Slide deck", Deck(() => futuresandeffects.futuresDeck)),
+        ),
       ),
       "7. Lazy, strict, and by-name" -> site.Toc(
       ),
