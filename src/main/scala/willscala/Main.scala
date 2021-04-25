@@ -95,7 +95,11 @@ object Main {
           Alternative("Slide deck", Deck(() => futuresandeffects.tasksDeck)),
         ),
       ),
-      "7. Lazy, strict, and by-name" -> site.Toc(
+      "7. Laziness" -> site.Toc(
+        "Intro" -> site.addPage("laziness", laziness.lazyIntro),
+        "Lazy, Strict, and By-Name" -> site.add("lazystrict",
+          Alternative("Slide deck", Deck(() => laziness.lazyListDeck)),
+        ),
       ),
       "8. Reactive programming" -> site.Toc(
       ),

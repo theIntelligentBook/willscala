@@ -3,6 +3,7 @@ package willscala
 import willscala.templates.Markup
 import com.wbillingsley.veautiful.html.{<, SVG, Styling, VHtmlNode, VHtmlComponent, ^}
 import com.wbillingsley.veautiful.doctacular.VideoPlayer
+import com.wbillingsley.veautiful.templates.DeckBuilder
 import org.scalajs.dom.{Element, Node}
 
 import scala.scalajs.js
@@ -11,6 +12,11 @@ import scala.scalajs.js
   * Common UI components to all the views
   */
 object Common {
+
+  extension (db:DeckBuilder)
+    // Allows us to do many slides at once, separated by ---
+    def markdownSlidex(s:String) =
+      s.split("---").foldLeft(db)( (db, s) => db.markdownSlide(s) )
 
   val routes:Seq[(Route, String)] = Seq(
     IntroRoute -> "Hello world",

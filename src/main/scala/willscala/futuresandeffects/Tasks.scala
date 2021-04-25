@@ -11,7 +11,7 @@ val tasksDeck = DeckBuilder(1920, 1080)
   .markdownSlidex(
     """## Futures are not referentially transparent
       |
-      |Although Futures compose in for-notations as if they were monoids, they are not referentiallly transparent
+      |Although Futures compose in for-notations as if they were monads, they are not referentiallly transparent
       |
       |```scala
       |def zen()(using ec:ExecutionContext) =

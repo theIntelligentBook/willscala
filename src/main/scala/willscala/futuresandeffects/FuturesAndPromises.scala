@@ -3,10 +3,6 @@ package willscala.futuresandeffects
 import com.wbillingsley.veautiful.templates._
 import willscala.Common._
 
-extension (db:DeckBuilder)
-    def markdownSlidex(s:String) =
-        s.split("---").foldLeft(db)( (db, s) => db.markdownSlide(s) )
-
 val futuresDeck = DeckBuilder(1920, 1080)
   .markdownSlide(
     """
