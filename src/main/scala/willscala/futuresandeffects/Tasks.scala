@@ -14,7 +14,10 @@ val tasksDeck = DeckBuilder(1920, 1080)
       |Although Futures compose in for-notations as if they were monoids, they are not referentiallly transparent
       |
       |```scala
-      |def zen():Future[String] = wsClient.url("https://api.github.com/zen").get().map(_.body)
+      |def zen()(using ec:ExecutionContext) =
+      |  val randomStr = Random.nextString(4)
+      |  println(s"A call was made with random String $randomStr")
+      |  wsClient.url(s"https://api.github.com/zen?$randomStr").get().map(_.body)
       |
       |// This makes one network call and gets one zen
       |val z = zen()
@@ -104,11 +107,138 @@ val tasksDeck = DeckBuilder(1920, 1080)
       |type Task[+T] = ExecutionContext => Future[T]
       |```
       |
+      |We now have something that *describes* the task we want to perform, but doesn't perform it yet.
+      |
+      |To make this usable, though, we're going to want to give it some functions and turn it into a monad.
+      |
       |---
       |
-      |## A companion object
+      |## Adding `unsafeRunAsync()`
       |
-      |... still writing
+      |`Task[T]` is just a function, `ExecutionContext => Future[T]`. It only really has the methods that functions do,
+      |for instance `apply(ec)` to run it.
+      |
+      |But we can appear to add some methods by using extension methods
+      |
+      |```scala
+      |extension[T] (task:Task[T])
+      |  def unsafeRunAsync()(using ec:ExecutionContext) = task.apply(ec)
+      |```
+      |
+      |Now, if we have a task, we can say `task.unsafeRunAsync()` to run it
+      |(if there's an implicit execution context in scope to run it on)
+      |
+      |---
+      |
+      |## Adding `map` and `flatMap`
+      |
+      |To use `Task[T]` in for-comprehensions, we need to make it more monad-like. Particularly, we're going to
+      |need to define `map` and `flatMap`.
+      |
+      |These can be added as extension methods too.
+      |In each case, we want a task that runs this task and then processes the result.
+      |
+      |```scala
+      |extension[T] (task:Task[T])
+      |  def unsafeRunAsync()(using ec:ExecutionContext) = task.apply(ec)
+      |
+      |  def map[B](f: T => B):Task[B] =
+      |    (ec) => task.apply(ec).map(f)(using ec)
+      |
+      |  def flatMap[B](f: T => Task[B]):Task[B] =
+      |    (ec) => task.apply(ec).flatMap(t => f(t).apply(ec))(using ec)
+      |```
+      |
+      |---
+      |
+      |## Now we can use our tasks
+      |
+      |Let's define `zen` slightly differently - we're going to change the implicit `ExecutionContext` to an explicit
+      |one.
+      |
+      |```scala
+      |def zen(ec:ExecutionContext):Future[String] =
+      |  val randomStr = Random.nextString(4)
+      |  println(s"A call was made with random String $randomStr")
+      |  wsClient.url(s"https://api.github.com/zen?$randomStr").get().map(_.body)(using ec)
+      |```
+      |
+      |Now, `zen` is of type `ExecutionContext => Future[String]`. i.e., it is a `Task[String]`.
+      |
+      |```scala
+      |val zenIsATask:Task[String] = zen
+      |```
+      |
+      |---
+      |
+      |## Let's define a combined task
+      |
+      |Because `zen` is a task, it won't run until we call `unsafeRunAsync()` (or call `apply(executionContext)`).
+      |
+      |But because it's monad-like, we can use it in for-comprehensions to describe bigger tasks
+      |
+      |```scala
+      |val twoZens:Task[String] =
+      |  for
+      |    a <- zen
+      |    b <- zen
+      |  yield s"$a then $b"
+      |```
+      |
+      |No web calls have been made yet. We've just described the *task* of making two web calls.
+      |
+      |---
+      |
+      |## Let's run our combined task
+      |
+      |To run my combined task I pick an execution context and call `unsafeRunAsync`
+      |
+      |```scala
+      |import scala.concurrent.ExecutionContext.Implicits.global
+      |for result <- twoZens.unsafeRunAsync() do
+      |  println(result)
+      |  System.exit(0)
+      |```
+      |
+      |This task is also reusable (if we run it again, it runs again).
+      |
+      |---
+      |
+      |## Tasks are referentially transparent
+      |
+      |Tasks are referentially transparent until we call `unsafeRunAsync()`
+      |
+      |```scala
+      |val twoZens:Task[String] =
+      |  for
+      |    a <- zen
+      |    b <- zen
+      |  yield s"$a then $b"
+      |```
+      |
+      |is
+      |
+      |```scala
+      |val twoZens:Task[String] =
+      |  for
+      |    a <- (ec:ExecutionContext) => // some code
+      |    b <- (ec:ExecutionContext) => // some code
+      |  yield s"$a then $b"
+      |```
+      |
+      |Nothing has really run yet - we're just composing functions.
+      |
+      |---
+      |
+      |## Tasks are an effect system
+      |
+      |Types like `Task[T]` are also sometimes considered to be an *effect system*
+      |
+      |When we call `unsafeRunAsync()`, they have an effect on the world: e.g. making a network call that might
+      |fetch input or update something on another system.
+      |
+      |However, we've represented this in the type: `Task[T]`. Whenever we receive something of type `Task[T]`,
+      |we know that (when run) it will have an effect on the world.
       |
       |""".stripMargin)
   .markdownSlide(willCcBy).withClass("bottom")

@@ -232,7 +232,12 @@ val futuresDeck = DeckBuilder(1920, 1080)
       |## Let's do a network request...
       |
       |```scala
-      |  val wsClient = AhcWSClient()
+      |  // A little boilerplate - this is needed by the web client we're using
+      |  given actorSystem:ActorSystem = ActorSystem()
+      |  given materializer:Materializer = SystemMaterializer(actorSystem).materializer
+      |
+      |  // Now we can create our web client and make a request
+      |  val wsClient = StandaloneAhcWSClient()
       |  val f = wsClient
       |    .url("https://api.github.com/zen")
       |    .get()
@@ -256,7 +261,7 @@ val futuresDeck = DeckBuilder(1920, 1080)
       |We can compose a function onto our future using `map`.
       |
       |```scala
-      |val wsClient = AhcWSClient()
+      |val wsClient = StandaloneAhcWSClient()
       |val f = wsClient
       |  .url("https://api.github.com/zen")
       |  .map(_.body).map(_.toUpperCase)
@@ -279,8 +284,9 @@ val futuresDeck = DeckBuilder(1920, 1080)
       |We can compose these using `flatMap`. Let's put our "zen" fetcher into a function
       |
       |```scala
-      |def zen():Future[String] =
-      |  wsClient.url("https://api.github.com/zen").get().map(_.body)
+      |def zen()(using ec:ExecutionContext):Future[String] =
+      |  val randomStr = Random.nextString(4) // Makes sure we don't get a cached reply
+      |  wsClient.url(s"https://api.github.com/zen?$randomStr").get().map(_.body)
       |```
       |
       |...and let's do two of them
@@ -358,7 +364,9 @@ val futuresDeck = DeckBuilder(1920, 1080)
       |the outcome of the program.
       |
       |```scala
-      |def zen():Future[String] = wsClient.url("https://api.github.com/zen").get().map(_.body)
+      |def zen()(using ec:ExecutionContext):Future[String] =
+      |  val randomStr = Random.nextString(4) // Makes sure we don't get a cached reply
+      |  wsClient.url(s"https://api.github.com/zen?$randomStr").get().map(_.body)
       |
       |// This makes one network call and gets one zen
       |val z = zen()
