@@ -77,7 +77,7 @@ val typeclasses = DeckBuilder(1920, 1080)
   .markdownSlide(
     """## Typeclasses
       |
-      |Let's provide the corkscrew. I've put it in the companion object to Wine, because that's one of the places the compiler will look for it.
+      |Let's provide the corkscrew.
       |
       |```scala
       |// Corkscrew
@@ -102,7 +102,7 @@ val typeclasses = DeckBuilder(1920, 1080)
       |Calling it with the corkscrew explicitly:
       |
       |```scala
-      |pour(new Wine("Sussex pinot meunier"))(Wine.Corkscrew)
+      |pour(new Wine("Sussex pinot meunier"))(using Wine.Corkscrew)
       |```
       |
       |or letting the compiler find the corkscrew implicitly
@@ -141,12 +141,11 @@ val typeclasses = DeckBuilder(1920, 1080)
   )
   .markdownSlide(
     """
-      |# Monoids and Composition
+      |## Monoids and Composition
       |
       |No, they're not a Doctor Who monster...
-      |
       |""".stripMargin
-  )
+  ).withClass("center middle")
   .markdownSlide(
     """## Multiplication
       |
@@ -384,7 +383,7 @@ val typeclasses = DeckBuilder(1920, 1080)
       |It's a slightly convoluted piece of syntax, but we just expressed a lot:
       |
       |* For some `Monoid` `M`, if we have a `List[M]`
-      |* We define an extension method `mconcat` that will fold across the list, starting with the `mempty` value, 
+      |* We define an extension method `combineAll` that will fold across the list, starting with the `mempty` value, 
       |  and combining everything using that monoid's `<>` operator.
       |  
       |The `summon` keyword summons the Monoid implementation from the context. We need to do that because we defined
