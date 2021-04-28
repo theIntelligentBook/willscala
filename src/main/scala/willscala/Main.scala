@@ -85,6 +85,9 @@ object Main {
           Alternative("Slide deck", Deck(() => cattheory.typeclasses)),
           Alternative("Watch the video", Video(() => PlayableVideo(Echo360Video("c2abd869-f323-467f-9bf0-3aa1e2559da7")))),
         ),
+        "Categories and Monads" -> site.add("monads",
+          Alternative("Slide deck", Deck(() => cattheory.cattheorydeck)),
+        ),
       ),
       "6. Futures and effects" -> site.Toc(
         "Intro" -> site.addPage("futures", futuresandeffects.futuresIntro),
@@ -99,6 +102,7 @@ object Main {
         "Intro" -> site.addPage("laziness", laziness.lazyIntro),
         "Lazy, Strict, and By-Name" -> site.add("lazystrict",
           Alternative("Slide deck", Deck(() => laziness.lazyListDeck)),
+          Alternative("Watch the video", Video(() => PlayableVideo(Echo360Video("4305acf5-11c4-43b9-8a8c-b878ee46efa8")))),
         ),
       ),
       "8. Reactive programming" -> site.Toc(

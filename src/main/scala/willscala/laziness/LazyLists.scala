@@ -303,7 +303,7 @@ val lazyListDeck = DeckBuilder(1920, 1080)
       |
       |### Lazy List
       |
-      |Using this machinery, we can build up a `LasyList`
+      |Using this machinery, we can build up a `LazyList`
       |
       |Let's start with a *strict* version, and see how we can change it
       |
@@ -353,8 +353,8 @@ val lazyListDeck = DeckBuilder(1920, 1080)
       |### Let's test the by-value version
       |
       |```scala
-      |  val bnRange = Lst.range(1, 6)
-      |  println(bnRange.apply(1))
+      |val myList = range(1, 6)
+      |println(myList.apply(1))
       |```
       |
       |```
@@ -386,8 +386,8 @@ val lazyListDeck = DeckBuilder(1920, 1080)
       |### Let's test the by-name version
       |
       |```scala
-      |  val bnRange = Lst.range(1, 6)
-      |  println(bnRange.apply(1))
+      |val myList = range(1, 6)
+      |println(myList.apply(1))
       |```
       |
       |```
@@ -409,9 +409,9 @@ val lazyListDeck = DeckBuilder(1920, 1080)
       |### But there's a problem
       |
       |```scala
-      |  val bnRange = Lst.range(1, 6)
-      |  println(bnRange.apply(1))
-      |  println(bnRange.apply(1))
+      |val myList = range(1, 6)
+      |println(myList.apply(1))
+      |println(myList.apply(1))
       |```
       |
       |```
@@ -445,9 +445,9 @@ val lazyListDeck = DeckBuilder(1920, 1080)
       |### The lazy val works
       |
       |```scala
-      |  val bnRange = Lst.range(1, 6000000)
-      |  println(bnRange.apply(1))
-      |  println(bnRange.apply(1))
+      |val myList = range(1, 6000000)
+      |println(myList.apply(1))
+      |println(myList.apply(1))
       |```
       |
       |```
@@ -462,8 +462,8 @@ val lazyListDeck = DeckBuilder(1920, 1080)
       |### But here's a different problem
       |
       |```scala
-      |  val bnRange = Lst.range(1, 6)
-      |  println(bnRange)
+      |val myList = range(1, 6)
+      |println(myList)
       |```
       |
       |```
