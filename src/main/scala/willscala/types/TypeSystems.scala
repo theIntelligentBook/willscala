@@ -4,6 +4,7 @@ import com.wbillingsley.veautiful.html._
 import com.wbillingsley.veautiful.templates._
 import willscala.{Common, Styles, styleSuite}
 import Common.{marked, willCcBy}
+import willscala.given
 
 import coderunner.JSCodable
 import lavamaze.Maze

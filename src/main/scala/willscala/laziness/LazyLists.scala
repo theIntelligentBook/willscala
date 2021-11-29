@@ -2,6 +2,7 @@ package willscala.laziness
 
 import com.wbillingsley.veautiful.templates._
 import willscala.Common._
+import willscala.given
 
 val lazyListDeck = DeckBuilder(1920, 1080)
   .markdownSlide(

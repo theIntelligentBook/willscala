@@ -2,6 +2,7 @@ package willscala.futuresandeffects
 
 import com.wbillingsley.veautiful.templates._
 import willscala.Common._
+import willscala.given
 
 val tasksDeck = DeckBuilder(1920, 1080)
   .markdownSlide(
