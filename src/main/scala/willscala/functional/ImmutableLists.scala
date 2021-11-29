@@ -6,6 +6,7 @@ import com.wbillingsley.veautiful.templates._
 import willscala.styleSuite
 import willscala.Common
 import willscala.Common.{marked, willCcBy}
+import willscala.given
 
 val immutableLists = DeckBuilder(1920, 1080)
   .markdownSlide(

@@ -2,7 +2,7 @@ package willscala.futuresandeffects
 
 import com.wbillingsley.veautiful.html.{<, ^, unique}
 import willscala.Common.{Echo360Video, chapterHeading, marked}
-import willscala.templates.{FrontPage, Markup}
+import willscala.templates.{FrontPage}
 import willscala.topics.{FunctionalProgramming, HigherOrder, ImperativeProgramming}
 
 val futuresIntro = unique(<.div(

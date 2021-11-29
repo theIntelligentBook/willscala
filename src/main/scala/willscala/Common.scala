@@ -1,12 +1,20 @@
 package willscala
 
-import willscala.templates.Markup
-import com.wbillingsley.veautiful.html.{<, SVG, Styling, VHtmlNode, VHtmlComponent, ^}
+import com.wbillingsley.veautiful.html.{<, SVG, Styling, VHtmlNode, VHtmlComponent, ^, Markup}
 import com.wbillingsley.veautiful.doctacular.VideoPlayer
 import com.wbillingsley.veautiful.templates.DeckBuilder
 import org.scalajs.dom.{Element, Node}
 
 import scala.scalajs.js
+import scala.scalajs.js.annotation._
+
+@js.native
+@JSImport("marked", "marked")
+object Marked extends js.Object:
+  def parse(s:String):String = js.native
+
+given markdown:Markup = new Markup({ (s:String) => Marked.parse(s).asInstanceOf[String] })
+
 
 /**
   * Common UI components to all the views
@@ -57,7 +65,7 @@ object Common {
     <.div(^.cls := "container", ch)
   )
 
-  def marked(text: => String) = Markup.marked.MarkupNode(() => text)
+  def marked(text: => String) = markdown.Updatable()(() => text)
 
   /** Circuits Up! Logo */
   def symbol = {

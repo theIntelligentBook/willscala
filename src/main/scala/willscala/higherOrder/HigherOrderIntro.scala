@@ -5,6 +5,7 @@ import com.wbillingsley.veautiful.html.{<, Markup, SVG, VHtmlComponent, VHtmlNod
 import willscala.templates.Topic
 import willscala.Common._
 import willscala.Styles._
+import willscala.given
 
 import scala.scalajs.js
 

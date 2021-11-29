@@ -4,6 +4,7 @@ import com.wbillingsley.veautiful.html._
 import willscala.Common._
 import willscala.Styles._
 import willscala.templates.Topic
+import willscala.given
 
 import scala.scalajs.js
 

@@ -3,6 +3,7 @@ package willscala.imperative
 import com.wbillingsley.veautiful.templates._
 import willscala.Common
 import willscala.Common.willCcBy
+import willscala.given
 
 val scalaOO = DeckBuilder(1920, 1080)
   .markdownSlide(

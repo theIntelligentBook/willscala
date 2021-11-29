@@ -41,3 +41,8 @@ metals.sbt
 # VSCode
 .vscode
 
+# Node
+node_modules/
+
+# Packed directory from our own script
+packed/

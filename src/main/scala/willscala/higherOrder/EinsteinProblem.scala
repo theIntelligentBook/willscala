@@ -5,6 +5,7 @@ import com.wbillingsley.veautiful.templates._
 import willscala.styleSuite
 import willscala.Common
 import willscala.Common.{marked, willCcBy}
+import willscala.given
 
 import scala.annotation.tailrec
 
