@@ -1,0 +1,1 @@
+echo "Using sbt to compile your site to JS" && sbt deployFast && echo "Using webpack to consolidate scripts" && npx webpack --config webpack.config.dev.js

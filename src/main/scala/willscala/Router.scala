@@ -3,7 +3,7 @@ package willscala
 import com.wbillingsley.veautiful.PathDSL
 import com.wbillingsley.veautiful.html.{<, ^}
 import com.wbillingsley.veautiful.templates.HistoryRouter
-import willscala.templates.{FrontPage, Markup}
+import willscala.templates.{FrontPage}
 import willscala.topics.{FunctionalProgramming, HigherOrder, ImperativeProgramming}
 
 sealed trait Route

@@ -1,10 +1,13 @@
 enablePlugins(ScalaJSPlugin)
 
 name := "Will Scala"
-scalaVersion := "3.0.0-RC1"
+scalaVersion := "3.1.0"
 
 // This is an application with a main method
 scalaJSUseMainModuleInitializer := true
+
+// Because we then use webpack to build the final output
+scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.ESModule) }
 
 resolvers += "jitpack" at "https://jitpack.io"
 
@@ -19,9 +22,16 @@ libraryDependencies ++= Seq(
 
 val deployScript = taskKey[Unit]("Copies the fullOptJS script to deployscripts/")
 
-// Used by Travis-CI to get the script out from the .gitignored target directory
-// Don't run it locally, or you'll find the script gets loaded twice in index.html!
-deployScript := {
+val deployFast = taskKey[Unit]("Copies the fastLinkJS script to deployscripts/")
+val deployFull = taskKey[Unit]("Copies the fullLinkJS script to deployscripts/")
+
+// Used by GitHub Actions to get the script out from the .gitignored target directory
+deployFast := {
+  val opt = (Compile / fastOptJS).value
+  IO.copyFile(opt.data, new java.io.File("target/compiled.js"))
+}
+
+deployFull := {
   val opt = (Compile / fullOptJS).value
-  IO.copyFile(opt.data, new java.io.File("deployscripts/compiled.js"))
+  IO.copyFile(opt.data, new java.io.File("target/compiled.js"))
 }

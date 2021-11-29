@@ -1,43 +1,24 @@
-
-*.class
-*.log
-
-# Maven/sbt output directory
-target
-dist
-
-# Test database
-lift_example
-
-# Mac
-*.DS_Store
-
-# IntelliJ
-.idea
-.idea_modules
-
-# Eclipse
+target/
 .cache
 .classpath
-*.swp
 .project
-.settings
-.target
+.settings/
+.idea/
 
+# VS Code, Metals, Bloop
+.metals/
+.bloop/
+.vscode/
+.scala/
+.bsp/
+project/metals.sbt
+project/project
 
-# Vagrant
-.vagrant
-vagrant/.bashrc
-vagrant/sbt-launch.jar
+# Node
+node_modules/
 
-tmp
+# For the moment, don't commit package-lock
+pacakge-lock.json
 
-# Metals
-.bsp
-.metals
-.bloop
-metals.sbt
-
-# VSCode
-.vscode
-
+# In the gh-pages version, we include the packed directory
+!packed/
