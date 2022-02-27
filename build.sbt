@@ -1,13 +1,15 @@
 enablePlugins(ScalaJSPlugin)
 
 name := "Will Scala"
-scalaVersion := "3.1.0"
+scalaVersion := "3.1.1"
 
 // This is an application with a main method
 scalaJSUseMainModuleInitializer := true
 
 // Because we then use webpack to build the final output
-scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.ESModule) }
+// Note, we use the CommonJSModule output, as otherwise Scala.js will skip using the Closure compiler to
+// shrink the full output.
+scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) }
 
 resolvers += "jitpack" at "https://jitpack.io"
 
