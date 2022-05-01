@@ -107,7 +107,14 @@ object Main {
           Alternative("Watch the video", Video(() => Echo360Video("4305acf5-11c4-43b9-8a8c-b878ee46efa8"))),
         ),
       ),
-      "8. Reactive programming" -> site.Toc(
+      "8. Actors" -> site.Toc(
+        "Intro" -> site.addPage("actorsIntro", actors.intro),
+        "Actors" -> site.add("actorsDeck",
+          Alternative("Slide deck", Deck(() => actors.actorsDeck)),
+        ),
+        "Actors" -> site.add("typedActors",
+          Alternative("Slide deck", Deck(() => actors.typedActors)),
+        ),
       ),
       "9. Asynchronous streams" -> site.Toc(
       ),

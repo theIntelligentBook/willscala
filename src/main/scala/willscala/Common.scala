@@ -15,6 +15,49 @@ object Marked extends js.Object:
 
 given markdown:Markup = new Markup({ (s:String) => Marked.parse(s).asInstanceOf[String] })
 
+@js.native
+@JSImport("mermaid", JSImport.Default)
+object Mermaid extends js.Object:
+  def initialize(config:js.Object):String = js.native
+  def mermaidAPI:js.Dynamic = js.native
+
+
+object MermaidDiagram {
+  private var initialized = false
+
+  def initialize():Unit =
+    if !initialized then
+      Mermaid.initialize(js.Object("startOnLoad" -> false))
+      initialized = true
+ 
+    ()
+
+  def render(s:String, callback:String => Unit) = 
+    Mermaid.mermaidAPI.render("achart", s, callback)
+}
+
+case class MermaidDiagram(source:String) extends VHtmlNode {
+
+  var _domNode:Option[org.scalajs.dom.Node] = None
+  def domNode = _domNode
+
+  private val el = <.div().create()
+
+  override def beforeAttach() = {
+    MermaidDiagram.initialize()
+    MermaidDiagram.render(source, (s:String) => {
+      el.innerHTML = s
+    })
+  }
+
+  override def attach() = {
+    _domNode = Some(el)
+    el
+  }
+  override def detach() = _domNode = None
+
+}
+
 
 /**
   * Common UI components to all the views

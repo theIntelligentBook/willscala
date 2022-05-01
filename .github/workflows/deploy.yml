@@ -34,7 +34,7 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Compile the deck to JavaScript
         run: |
-          npm install
+          yarn install
           chmod u+x fullBuild.sh
           ./fullBuild.sh
           mv .github/workflows/.gitignore.gh-pages .gitignore
