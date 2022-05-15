@@ -109,14 +109,21 @@ object Main {
       ),
       "8. Actors" -> site.Toc(
         "Intro" -> site.addPage("actorsIntro", actors.intro),
-        "Actors" -> site.add("actorsDeck",
+        "Classic Actors" -> site.add("actorsDeck",
           Alternative("Slide deck", Deck(() => actors.actorsDeck)),
         ),
-        "Actors" -> site.add("typedActors",
+        "Typed Actors" -> site.add("typedActors",
           Alternative("Slide deck", Deck(() => actors.typedActors)),
         ),
       ),
       "9. Asynchronous streams" -> site.Toc(
+        "Intro" -> site.addPage("asyncStreamIntro", asyncstreams.intro),
+        "Reactive Streams" -> site.add("reactiveStreams",
+          Alternative("Slide deck", Deck(() => asyncstreams.reactiveStreamsDeck)),
+        ),
+        "Cats Effect" -> site.add("catsEffect",
+          Alternative("Slide deck", Deck(() => asyncstreams.catsEffectDeck)),
+        ),
       ),
       "10. Fast data" -> site.Toc(
       ),
