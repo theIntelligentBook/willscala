@@ -6,6 +6,7 @@
   },
   "dependencies": {
     "marked": "^4.0.4",
-    "mermaid": "^9.0.1"
+    "mermaid": "^9.0.1",
+    "highlight.js": "^11.7.0"
   }
 }

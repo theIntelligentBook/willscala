@@ -1,5 +1,6 @@
 package willscala.actors
 
+import com.wbillingsley.veautiful.html.*
 import com.wbillingsley.veautiful.doctacular.*
 import willscala.Common._
 import willscala.given
@@ -90,7 +91,7 @@ val actorsDeck = DeckBuilder(1920, 1080)
       |
       |---
       |
-      |## Concurrent Erlang in 3 examples
+      |## Concurrent Erlang 
       |
       |Spawning a process:
       |
@@ -114,8 +115,60 @@ val actorsDeck = DeckBuilder(1920, 1080)
       |    Actions2;
       |```
       |
-      |---
-      |
+      |""".stripMargin)
+    .veautifulSlide(<.div(
+      marked(
+        """|## Actors can be like state machines
+           |
+           |This is an example from the [Erlang docs](https://www.erlang.org/doc/getting_started/conc_prog.html). 
+           |
+           |* `pong` does the same thing every time, but
+           |* `ping` replaces itself with `ping(n - 1, pong)`, acting like a state machine that counts down to zero
+           |
+           |""".stripMargin
+      ),
+      <.div(^.attr.style := "overflow-y: scroll; height: 640px;",
+        marked(
+          """|
+             |```erlang
+             |-module(tut15).
+             |
+             |-export([start/0, ping/2, pong/0]).
+             |
+             |ping(0, Pong_PID) ->
+             |    Pong_PID ! finished,
+             |    io:format("ping finished~n", []);
+             |
+             |ping(N, Pong_PID) ->
+             |    Pong_PID ! {ping, self()},
+             |    receive
+             |        pong ->
+             |            io:format("Ping received pong~n", [])
+             |    end,
+             |    ping(N - 1, Pong_PID).
+             |
+             |pong() ->
+             |    receive
+             |        finished ->
+             |            io:format("Pong finished~n", []);
+             |        {ping, Ping_PID} ->
+             |            io:format("Pong received ping~n", []),
+             |            Ping_PID ! pong,
+             |            pong()
+             |    end.
+             |
+             |start() ->
+             |    Pong_PID = spawn(tut15, pong, []),
+             |    spawn(tut15, ping, [3, Pong_PID]).
+             |
+             |```
+          """.stripMargin
+        )      
+      )      
+    )
+  )
+  .markdownSlides(
+   """|
       |## Actors
       |
       |Turns out, that kind of thing already had a name: the *Actor* model.
@@ -143,115 +196,18 @@ val actorsDeck = DeckBuilder(1920, 1080)
       |
       |---
       |
-      |### Akka "Classic (Untyped) Actors"
+      |## Scala actor libraries
       |
-      |*Akka* is Scala's actor framework. It's a library, rather than a core part of the language.
+      |There are a few options for Actors in Scala:
       |
-      |It has *typed* and *untyped* versions of Actors. The *untyped* version looks similar to Erlang.
+      |* [Akka](https://akka.io) is a popular library for Actors in Scala and is used by some very large companies. 
+      |  However, as of 2022, it's not completely open source. It's also very big, so we'll save it for its own slide decks and tutorials.
       |
-      |Defining an Actor:
+      |* [Vert.x](https://vertx.io/) implements the "multi-reactor" pattern on the JVM. It's essentially actors.
       |
-      |```scala
-      |class Hello extends Actor {
-      |  def receive = {
-      |    case NameMessage(name) =>
-      |      println(s"Hello $name")
-      |  }
-      |}
-      |```
-      |
-      |---
-      |
-      |### Akka
-      |
-      |`receive` is defined as a partial function -- that's why we haven't given it an argument in parentheses or a `match`
-      |statement
-      |
-      |Defining an Actor:
-      |
-      |```scala
-      |class Hello extends Actor {
-      |  def receive:PartialFunction[Any,Unit] = {
-      |    case NameMessage(name) =>
-      |      println(s"Hello $name")
-      |  }
-      |}
-      |```
-      |
-      |
-      |
-      |---
-      |
-      |### Akka
-      |
-      |Creating Actors has a little wrinkle
-      |
-      |```scala
-      |  val system = ActorSystem("PingPongSystem")
-      |  val hello = system.actorOf(Props[Hello], name = "hello")
-      |```
-      |
-      |What's `Props`?
-      |
-      |---
-      |
-      |### Props
-      |
-      |* Actors don't have direct references to each other -- the other Actor could be on another machine.
-      |
-      |* Instead they have an `ActorRef` -- the system will actually handle getting the message to its destination
-      |
-      |* This also means we *can't directly call the constructor to create the actor* -- Akka has to do it for us
-      |
-      |* `Props` is the properties (arguments) that need to be passed to the constructor of an actor we want to create
-      |
-      |---
-      |
-      |### Props
-      |
-      |```scala
-      |  val system = ActorSystem("PingPongSystem")
-      |  val hello = system.actorOf(Props[Hello], name = "hello")
-      |```
-      |
-      |*Create me a Hello actor, called "hello", and its constructor doesn't take any arguments*
-      |
-      |---
-      |
-      |## Sending a message
-      |
-      |If we have an `ActorRef` to the Hello actor sending it a message is very simple:
-      |
-      |```scala
-      |pong.tell(NameMessage("World"), sender)
-      |```
-      |
-      |or, for short:
-      |
-      |```scala
-      |hello ! NameMessage("World")
-      |```
-      |
-      |---
-      |
-      |## Asking a question
-      |
-      |* Algernon writes Bertie a letter asking a question
-      |* Some time later, Bertie reads the letter. He thinks about it a bit, and then writes a reply
-      |* Some time later, Algernon reads the reply
-      |
-      |We could implement this just using what we have so far, but it's a fairly common *pattern*. 
-      |Maybe it could be more concise?
-      |
-      |---
-      |
-      |## Asking a question
-      |
-      |When Algernon sends Bertie the question, *sometime in the future* he'll get a reply
-      |
-      |```scala
-      |val fResponse:Future[Any] = bertie ? QuestionMessage(myQuestion)
-      |```
+      |* [Amdram](https://www.wbillingsley.com/amdram) is a little open source one that I've written to try to explain the basics of Actors.
+      |  It doesn't have all the bells and whistles of larger libraries, but is hopefully small enough to use in toy applications (and assignments)
+      |  without imposing too much learning overhead
       |
       |---
       |

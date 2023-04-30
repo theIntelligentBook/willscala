@@ -13,7 +13,7 @@ val typedActors = DeckBuilder(1920, 1080)
       |""".stripMargin).withClass("center middle")
   .markdownSlidex(
     """
-      |## The trouble with Classic Actors
+      |## The trouble with Akka Classic Actors
       |
       |Classic (untyped) Actors have two aspects that functional programmers wouldn't be keen on:
       |
