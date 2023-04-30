@@ -1,7 +1,7 @@
 package willscala.types
 
 import com.wbillingsley.veautiful.html._
-import com.wbillingsley.veautiful.templates._
+import com.wbillingsley.veautiful.doctacular.*
 import willscala.{Common, Styles, styleSuite}
 import Common.{marked, willCcBy}
 import willscala.given

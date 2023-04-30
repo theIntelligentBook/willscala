@@ -1,14 +1,13 @@
 package willscala.livedemo
 
-import com.wbillingsley.veautiful.html._
-import com.wbillingsley.veautiful.templates._
+import com.wbillingsley.veautiful.*
+import com.wbillingsley.veautiful.doctacular.*
 import willscala.styleSuite
 import willscala.Common
 import willscala.Common.{marked, willCcBy}
 import willscala.given
 
-import <._
-import ^._
+import html.*
 
 import scala.annotation.tailrec
 
@@ -174,18 +173,18 @@ val propositions:Seq[Prop] = Seq(
 
 
 
-def streetHtml(street:Street):VHtmlNode = table(
-  for row <- 0 to 4 yield tr(style := "border-bottom: 1px solid #aaa;",
+def streetHtml(street:Street):VHtmlContent = table(
+  for row <- 0 to 4 yield tr(^.attr.style := "border-bottom: 1px solid #aaa;",
     for house <- street.houses yield td(house.cells(row).mkString(", "))
   )
 )
 
 
 import scala.collection.mutable
-val buffer:mutable.Buffer[VHtmlNode] = mutable.Buffer.empty
+val buffer:mutable.Buffer[VHtmlContent] = mutable.Buffer.empty
 
 
-def einsteinDemo = unique(div(
+def einsteinDemo = div(
   h2("Live-coded solution to Einstein's riddle"),
   p("We'll build up the solution here"),
   
@@ -213,5 +212,5 @@ def einsteinDemo = unique(div(
     buffer.toSeq
   )
   
-))
+)
 

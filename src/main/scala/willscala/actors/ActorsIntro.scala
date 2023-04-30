@@ -1,11 +1,9 @@
 package willscala.actors
 
-import com.wbillingsley.veautiful.html.{<, ^, unique}
+import com.wbillingsley.veautiful.html.*
 import willscala.Common.{Echo360Video, chapterHeading, marked}
-import willscala.templates.{FrontPage}
-import willscala.topics.{FunctionalProgramming, HigherOrder, ImperativeProgramming}
 
-val intro = unique(<.div(
+val intro = <.div(
   chapterHeading(8, "Actors", "images/alarmclock.jpg"),
   marked("""Let's take our revenge and make the computer a slave to its inbox.
            |
@@ -20,4 +18,4 @@ val intro = unique(<.div(
            |Akka is Scala's most famous Actor library. Its "Classic Actors" (untyped actors) are similar to Erlang. 
            |Its "Typed Actors" take a more functional programming approach to actors. We'll take a look at both.
            |""".stripMargin),
-))
+)

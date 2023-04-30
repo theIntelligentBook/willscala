@@ -91,7 +91,14 @@ object Main {
           Alternative("Slide deck", Deck(() => cattheory.cattheorydeck)),
         ),
       ),
-      "6. Futures and effects" -> site.Toc(
+      "6. Laziness" -> site.Toc(
+        "Intro" -> site.addPage("laziness", laziness.lazyIntro),
+        "Lazy, Strict, and By-Name" -> site.add("lazystrict",
+          Alternative("Slide deck", Deck(() => laziness.lazyListDeck)),
+          Alternative("Watch the video", Video(() => Echo360Video("4305acf5-11c4-43b9-8a8c-b878ee46efa8"))),
+        ),
+      ),
+      "7. Futures and Effects" -> site.Toc(
         "Intro" -> site.addPage("futures", futuresandeffects.futuresIntro),
         "Futures and Promises" -> site.add("futuresandpromises",
           Alternative("Slide deck", Deck(() => futuresandeffects.futuresDeck)),
@@ -100,19 +107,21 @@ object Main {
           Alternative("Slide deck", Deck(() => futuresandeffects.tasksDeck)),
         ),
       ),
-      "7. Laziness" -> site.Toc(
-        "Intro" -> site.addPage("laziness", laziness.lazyIntro),
-        "Lazy, Strict, and By-Name" -> site.add("lazystrict",
-          Alternative("Slide deck", Deck(() => laziness.lazyListDeck)),
-          Alternative("Watch the video", Video(() => Echo360Video("4305acf5-11c4-43b9-8a8c-b878ee46efa8"))),
-        ),
-      ),
       "8. Actors" -> site.Toc(
         "Intro" -> site.addPage("actorsIntro", actors.intro),
-        "Classic Actors" -> site.add("actorsDeck",
+        "Reacting to a single value" -> site.add("towardsReactive",
+          Alternative("Slide deck", Deck(() => actors.reactiveIntro)),
+        ),
+        "Concurrency Oriented Programming" -> site.add("actorsDeck",
           Alternative("Slide deck", Deck(() => actors.actorsDeck)),
         ),
-        "Typed Actors" -> site.add("typedActors",
+        "Amdram" -> site.add("amdramDeck",
+          Alternative("Slide deck", Deck(() => actors.amdramDeck)),
+        ),
+        "Akka untyped" -> site.add("akkaClassicDeck",
+          Alternative("Slide deck", Deck(() => actors.akkaClassicDeck)),
+        ),
+        "Akka typed" -> site.add("typedActors",
           Alternative("Slide deck", Deck(() => actors.typedActors)),
         ),
       ),
@@ -125,13 +134,9 @@ object Main {
           Alternative("Slide deck", Deck(() => asyncstreams.catsEffectDeck)),
         ),
       ),
-      "10. Fast data" -> site.Toc(
-      ),
-      "11. Scala.js and Veautiful" -> site.Toc(
-      ),
     )
     
-    site.home = () => site.renderPage(frontPage.layout())
+    site.home = () => site.renderPage(frontPage)
     site.attachTo(n)
 
   }

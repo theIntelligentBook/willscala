@@ -13,13 +13,22 @@ scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) }
 
 resolvers += "jitpack" at "https://jitpack.io"
 
+// For Amdram
+resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
+
 updateOptions := updateOptions.value.withLatestSnapshots(false)
 
 libraryDependencies ++= Seq(
-  "com.github.wbillingsley.veautiful" %%% "veautiful" % "v0.2-SNAPSHOT",
-  "com.github.wbillingsley.veautiful" %%% "doctacular" % "v0.2-SNAPSHOT",
+  //"com.github.wbillingsley.veautiful" %%% "veautiful" % "v0.2-SNAPSHOT",
+  "com.wbillingsley" %%% "doctacular" % "0.3-M6",
+
+  // Amdram
+  "com.wbillingsley" %%% "amdram" % "0.0.0+5-cd0f1dd9-SNAPSHOT",
+
+  // macrotask executor
+  "org.scala-js" %%% "scala-js-macrotask-executor" % "1.1.1",
   
-  "com.github.wbillingsley" % "lavamaze" % "v0.2-SNAPSHOT", // Need to single-% as it's a top-level jitpack project
+  "com.github.wbillingsley" % "lavamaze" % "master-SNAPSHOT", // Need to single-% as it's a top-level jitpack project
 )
 
 val deployScript = taskKey[Unit]("Copies the fullOptJS script to deployscripts/")

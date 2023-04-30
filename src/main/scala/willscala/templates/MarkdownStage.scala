@@ -1,12 +1,12 @@
 package willscala.templates
 
 import com.wbillingsley.veautiful.DiffNode
-import com.wbillingsley.veautiful.html.{<, VHtmlNode}
-import com.wbillingsley.veautiful.templates.Challenge
+import com.wbillingsley.veautiful.html.{<, VHtmlContent}
+import com.wbillingsley.veautiful.doctacular.Challenge
 import org.scalajs.dom.{Element, Node}
 import willscala.Common
 
-case class MarkdownStage(t: () => String)(implicit val nextButton: () => VHtmlNode) extends Challenge.Stage {
+case class MarkdownStage(t: () => String)(implicit val nextButton: () => VHtmlContent) extends Challenge.Stage {
 
   val content = Common.marked(t())
 
@@ -14,7 +14,7 @@ case class MarkdownStage(t: () => String)(implicit val nextButton: () => VHtmlNo
 
   override def kind: String = "text"
 
-  override protected def render: DiffNode[Element, Node] = <.div(
+  override protected def render = <.div(
     Challenge.textAndEx(<.div(content, nextButton()))(<.div())
   )
 

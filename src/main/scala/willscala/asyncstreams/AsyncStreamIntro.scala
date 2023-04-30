@@ -2,10 +2,8 @@ package willscala.asyncstreams
 
 import com.wbillingsley.veautiful.html.{<, ^, unique}
 import willscala.Common.{Echo360Video, chapterHeading, marked}
-import willscala.templates.{FrontPage}
-import willscala.topics.{FunctionalProgramming, HigherOrder, ImperativeProgramming}
 
-val intro = unique(<.div(
+val intro = <.div(
   chapterHeading(8, "Asynchronous Streams", "images/alarmclock.jpg"),
   marked("""Many systems have to deal with a stream of events
            |
@@ -18,4 +16,4 @@ val intro = unique(<.div(
            |In this topic, we take a look at some of the ways of managing streams of events that might
            |occur at different rates.
            |""".stripMargin),
-))
+)

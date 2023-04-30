@@ -1,6 +1,6 @@
 package willscala.laziness
 
-import com.wbillingsley.veautiful.templates._
+import com.wbillingsley.veautiful.doctacular.*
 import willscala.Common._
 import willscala.given
 

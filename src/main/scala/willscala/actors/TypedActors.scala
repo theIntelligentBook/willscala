@@ -1,6 +1,6 @@
 package willscala.actors
 
-import com.wbillingsley.veautiful.templates._
+import com.wbillingsley.veautiful.doctacular.*
 import com.wbillingsley.veautiful.html.<
 import willscala.Common._
 import willscala.MermaidDiagram
@@ -13,7 +13,7 @@ val typedActors = DeckBuilder(1920, 1080)
       |""".stripMargin).withClass("center middle")
   .markdownSlidex(
     """
-      |## The trouble with Classic Actors
+      |## The trouble with Akka Classic Actors
       |
       |Classic (untyped) Actors have two aspects that functional programmers wouldn't be keen on:
       |

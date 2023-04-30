@@ -2,10 +2,8 @@ package willscala.futuresandeffects
 
 import com.wbillingsley.veautiful.html.{<, ^, unique}
 import willscala.Common.{Echo360Video, chapterHeading, marked}
-import willscala.templates.{FrontPage}
-import willscala.topics.{FunctionalProgramming, HigherOrder, ImperativeProgramming}
 
-val futuresIntro = unique(<.div(
+val futuresIntro = <.div(
   chapterHeading(6, "Futures and Effects", "images/alarmclock.jpg"),
   marked("""Now that we have the concept of `monad`s and can use for-comprehensions across any monad-like type
            |(rather than only across collections), we can use these structures to describe complex situations in a
@@ -20,4 +18,4 @@ val futuresIntro = unique(<.div(
            |program. So, libraries and structures that describe asynchronicity are often related to the idea of 
            |describing having an *effect* - changing something outside the program.
            |""".stripMargin),
-))
+)

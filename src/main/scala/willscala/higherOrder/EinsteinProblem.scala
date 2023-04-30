@@ -1,7 +1,7 @@
 package willscala.higherOrder
 
 import com.wbillingsley.veautiful.html._
-import com.wbillingsley.veautiful.templates._
+import com.wbillingsley.veautiful.doctacular._
 import willscala.styleSuite
 import willscala.Common
 import willscala.Common.{marked, willCcBy}
@@ -222,7 +222,7 @@ val streetTableStyling = Styling(
   " tr:nth-child(even)" -> "background: #ddd;"
 ).register()
 
-def sideBySide(a:VHtmlNode)(b:VHtmlNode) = <.div(^.cls := sideBySideStyling.className, a, b)
+def sideBySide(a:VHtmlContent)(b:VHtmlContent) = <.div(^.cls := sideBySideStyling.className, a, b)
 
 val stackPanelStyling = Styling(
   "height: 100%; position: relative; top: 0; width: 20ch;"
@@ -233,7 +233,7 @@ val stackPanelStyling = Styling(
 ).register()
 
 
-def renderStreet(s:Street):VHtmlNode = <.table(^.cls := streetTableStyling.className,
+def renderStreet(s:Street):VHtmlContent = <.table(^.cls := streetTableStyling.className,
   for r <- 0 until 5 yield <.tr(
     for h <- 0 until 5 yield <.td(
       s.houses(h).cells(r).mkString(", ")

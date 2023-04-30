@@ -1,10 +1,8 @@
 package willscala
 
 import com.wbillingsley.veautiful.html.{<, ^}
-import willscala.templates.{FrontPage}
-import willscala.topics.{FunctionalProgramming, HigherOrder, ImperativeProgramming}
 
-val frontPage = new FrontPage(
+val frontPage = <.div(
   <.div(
     <.img(^.src := "images/willscala.jpg", ^.alt := "The Adventures of Will Scala and his Merry Programs"),
     <.div(^.cls := "abs-bottom-right white-translucent-bg",

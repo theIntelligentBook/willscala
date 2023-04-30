@@ -1,13 +1,13 @@
 package willscala.imperative
 
-import com.wbillingsley.veautiful.html.{<, Markup, SVG, VHtmlComponent, VHtmlNode, ^, unique}
+import com.wbillingsley.veautiful.html.*
 import willscala.templates.Topic
 import willscala.Common._
 import willscala.Styles._
 
 import scala.scalajs.js
 
-val imperativeIntro = unique(<.div(
+val imperativeIntro = <.div(
   chapterHeading(1, "Imperative Programming", "images/imperative.png"),
   marked("""
     |If you're learning Scala, the chances are you've seen one or two different programming languages before. 
@@ -25,13 +25,4 @@ val imperativeIntro = unique(<.div(
   <.p(^.attr("style") := "text-align: center; margin-top: 8rem;",
     Echo360Video("51342d36-7817-47bd-a702-4ec8e49cfe32").embeddedPlayer(720, 480)
   )
-))
-
-
-val imperativeTopic = Topic(
-  name = "Imperative programming",
-  image = <.div(),
-  content = <.div(),
-  cssClass = "imperative",
-  completion = () => ""
 )

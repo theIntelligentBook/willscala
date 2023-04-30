@@ -2,10 +2,8 @@ package willscala.laziness
 
 import com.wbillingsley.veautiful.html.{<, ^, unique}
 import willscala.Common.{Echo360Video, chapterHeading, marked}
-import willscala.templates.{FrontPage}
-import willscala.topics.{FunctionalProgramming, HigherOrder, ImperativeProgramming}
 
-val lazyIntro = unique(<.div(
+val lazyIntro = <.div(
   chapterHeading(7, "Laziness", "images/lazy.jpg"),
   marked("""Why put off until tomorrow what you might never have to do at all?
            |
@@ -23,4 +21,4 @@ val lazyIntro = unique(<.div(
            |constructive laziness can let us write programs that are about infinite streams (which we can't evaluate
            |strictly because it would take forever).
            |""".stripMargin),
-))
+)

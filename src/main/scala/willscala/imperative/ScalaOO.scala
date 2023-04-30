@@ -1,6 +1,6 @@
 package willscala.imperative
 
-import com.wbillingsley.veautiful.templates._
+import com.wbillingsley.veautiful.doctacular.*
 import willscala.Common
 import willscala.Common.willCcBy
 import willscala.given
