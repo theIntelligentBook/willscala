@@ -1,11 +1,11 @@
 package willscala.imperative
 
 
-import com.wbillingsley.veautiful.html.{<, Markup, SVG, VHtmlComponent, VHtmlNode, ^, unique}
+import com.wbillingsley.veautiful.html.*
 import willscala.templates.Topic
 import willscala.Common._
 
-val setupTutorial = unique(<.div(
+val setupTutorial = <.div(
   marked(
     """## Practical: Setting up your development environment
       |
@@ -56,4 +56,4 @@ val setupTutorial = unique(<.div(
       |    For more details on Metals see [https://scalameta.org/metals/](https://scalameta.org/metals/)
       |  
       |""".stripMargin)
-))
+)

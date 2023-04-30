@@ -1,6 +1,6 @@
 package willscala.asyncstreams
 
-import com.wbillingsley.veautiful.templates._
+import com.wbillingsley.veautiful.doctacular._
 import willscala.Common._
 import willscala.given
 

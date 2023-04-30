@@ -7,7 +7,7 @@ import willscala.templates.Topic
 
 import scala.scalajs.js
 
-val typesIntro = unique(<.div(
+val typesIntro = <.div(
   chapterHeading(4, "Types", "images/types/babyrabbits.jpg"),
   marked("""
            |We've already met several types of data, ranging from `Int`s to `Strings` to traits and classes.
@@ -15,4 +15,4 @@ val typesIntro = unique(<.div(
            |In this chapter, we're going to look at some more advanced concepts around types. 
            |""".stripMargin
   ),
-))
+)

@@ -131,7 +131,7 @@ object Main {
       ),
     )
     
-    site.home = () => site.renderPage(frontPage.layout())
+    site.home = () => site.renderPage(frontPage)
     site.attachTo(n)
 
   }

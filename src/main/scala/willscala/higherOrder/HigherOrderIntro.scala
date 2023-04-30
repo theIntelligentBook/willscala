@@ -1,7 +1,7 @@
 package willscala.higherOrder
 
 
-import com.wbillingsley.veautiful.html.{<, Markup, SVG, VHtmlComponent, VHtmlNode, ^, unique}
+import com.wbillingsley.veautiful.html.*
 import willscala.templates.Topic
 import willscala.Common._
 import willscala.Styles._
@@ -9,7 +9,7 @@ import willscala.given
 
 import scala.scalajs.js
 
-val higherOrderIntro = unique(<.div(
+val higherOrderIntro = <.div(
   chapterHeading(3, "Functions as Values", "images/lambdagift.png"),
   marked("""
            |In this chapter, we're going to start looking at *higher order functions*: functions that take functions as 
@@ -20,4 +20,4 @@ val higherOrderIntro = unique(<.div(
            |And the really good news is that being able to use higher order functions means we'll very rarely have to 
            |write a recursive function. `map`, `filter`, `exists`, `flatMap`, etc, are your friends...
            |""".stripMargin),
-))
+)

@@ -1,7 +1,7 @@
 package willscala.functional
 
 import com.wbillingsley.veautiful.html._
-import com.wbillingsley.veautiful.templates._
+import com.wbillingsley.veautiful.doctacular._
 import willscala.styleSuite
 import willscala.Common
 import willscala.Common.{marked, willCcBy}
@@ -14,7 +14,7 @@ val sideBySideStyling = Styling(
     |column-gap: 2rem;
     |""".stripMargin).register()
 
-def sideBySide(a:VHtmlNode)(b:VHtmlNode) = <.div(^.cls := sideBySideStyling.className, a, b)
+def sideBySide(a:VHtmlContent)(b:VHtmlContent) = <.div(^.cls := sideBySideStyling.className, a, b)
 
 val stackPanelStyling = Styling(
   "height: 100%; position: relative; top: 0; width: 20ch;"
@@ -26,7 +26,7 @@ val stackPanelStyling = Styling(
 
 case class StackFrame(vars:String*)
 
-def stackPanel(frames:StackFrame*):VHtmlNode = <.div(^.cls := stackPanelStyling.className,
+def stackPanel(frames:StackFrame*):VHtmlContent = <.div(^.cls := stackPanelStyling.className,
   <.h4("Stack"),
   <.div(^.cls := "frames",
     for f <- frames yield <.pre(^.cls := "frame", f.vars.mkString("\n"))
@@ -34,7 +34,7 @@ def stackPanel(frames:StackFrame*):VHtmlNode = <.div(^.cls := stackPanelStyling.
 )
 
 
-def example1 = unique(sideBySide(
+def example1 = sideBySide(
   <.pre(
     """def triangular(accum:Int, n:Int) = 
       |  if n <= 0 then
@@ -42,7 +42,7 @@ def example1 = unique(sideBySide(
       |  else
       |    triangular(accum + n, n - 1)
       |""".stripMargin)
-)(marked("A recursive function (calls itself)")))
+)(marked("A recursive function (calls itself)"))
 
 
 def example2 = <.div(<.h4("Code"), <.pre("""

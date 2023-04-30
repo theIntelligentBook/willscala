@@ -1,8 +1,7 @@
 package willscala
 
-import com.wbillingsley.veautiful.html.{<, SVG, Styling, VHtmlNode, VHtmlComponent, ^, Markup}
-import com.wbillingsley.veautiful.doctacular.VideoPlayer
-import com.wbillingsley.veautiful.templates.DeckBuilder
+import com.wbillingsley.veautiful.html.{<, SVG, Styling, VHtmlContent, VHtmlElement, DHtmlComponent, ^, Markup}
+import com.wbillingsley.veautiful.doctacular.{VideoPlayer, DeckBuilder}
 import org.scalajs.dom.{Element, Node}
 
 import scala.scalajs.js
@@ -36,12 +35,12 @@ object MermaidDiagram {
     Mermaid.mermaidAPI.render("achart", s, callback)
 }
 
-case class MermaidDiagram(source:String) extends VHtmlNode {
+case class MermaidDiagram(source:String) extends VHtmlElement {
 
-  var _domNode:Option[org.scalajs.dom.Node] = None
+  var _domNode:Option[org.scalajs.dom.html.Element] = None
   def domNode = _domNode
 
-  private val el = <.div().create()
+  private val el = <.div().build().create()
 
   override def beforeAttach() = {
     MermaidDiagram.initialize()
@@ -69,53 +68,15 @@ object Common {
     def markdownSlidex(s:String) =
       s.split("---").foldLeft(db)( (db, s) => db.markdownSlide(s) )
 
-  val routes:Seq[(Route, String)] = Seq(
-    IntroRoute -> "Hello world",
-    ImperativeRoute(0, 0) -> "ThinkingAboutProgramming",
-  )
 
-  def linkToRoute(r:Route, s:String):VHtmlNode = <.a(
-    ^.href := Router.path(r),
-    ^.cls := (if (Router.route == r) "nav-link active" else "nav-link"),
-    s
-  )
-
-  def leftMenu:VHtmlNode = <("nav")(^.cls := "d-none d-md-block bg-light sidebar",
-    <.div(^.cls := "sidebar-sticky",
-      <.ul(^.cls := "nav nav-pills flex-column",
-        for { (r, t) <- routes } yield <.li(
-          ^.cls := "nav-item",
-          linkToRoute(r, t)
-        )
-      )
-    )
-  )
-
-  def layout(ch:VHtmlNode) = shell(<.div(^.cls := "move-content-down",
-    <.div(^.cls := "row",
-      <.div(^.cls := "col-sm-3", leftMenu),
-      <.div(^.cls := "col-sm-9", ch)
-    )
-  ))
-
-  def shell(ch:VHtmlNode) = <.div(
-    <("nav")(^.cls := "navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow",
-      <.div(^.cls := "container",
-        <.a(^.cls := "navbar-brand col-sm-3 col-md-2 mr-0", ^.href := "#", "")
-      )
-    ),
-
-    <.div(^.cls := "container", ch)
-  )
-
-  def marked(text: => String) = markdown.Updatable()(() => text)
+  def marked(text: => String) = markdown.div(text)
 
   /** Circuits Up! Logo */
   def symbol = {
     <.span()
   }
 
-  def downloadFromGitHub(project:String, user:String="UNEcosc250"):VHtmlNode = {
+  def downloadFromGitHub(project:String, user:String="UNEcosc250"):VHtmlContent = {
     <.a(
       ^.cls := "btn btn-secondary",
       ^.href := s"https://github.com/$user/$project/archive/master.zip",

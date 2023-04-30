@@ -1,10 +1,10 @@
 package willscala.imperative
 
-import com.wbillingsley.veautiful.html.{<, Markup, SVG, VHtmlComponent, VHtmlNode, ^, unique}
+import com.wbillingsley.veautiful.html.*
 import willscala.templates.Topic
 import willscala.Common._
 
-val tutorial = unique(<.div(
+val tutorial = <.div(
   marked(
     """## Practical: First steps in Scala
       |
@@ -111,4 +111,4 @@ val tutorial = unique(<.div(
       |```
       |
       |""".stripMargin)
-))
+)

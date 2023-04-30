@@ -2,8 +2,8 @@ package willscala.templates
 
 import com.wbillingsley.veautiful.DiffNode
 import com.wbillingsley.veautiful.html.{<, ^}
-import com.wbillingsley.veautiful.templates.Challenge
-import com.wbillingsley.veautiful.templates.Challenge.Open
+import com.wbillingsley.veautiful.doctacular.Challenge
+import com.wbillingsley.veautiful.doctacular.Challenge.Open
 import org.scalajs.dom.{Element, Node}
 
 case class YouTubeStage(yt:String) extends Challenge.Stage {
@@ -12,7 +12,7 @@ case class YouTubeStage(yt:String) extends Challenge.Stage {
 
   var completion: Challenge.Completion = Open
 
-  override protected def render: DiffNode[Element, Node] = {
+  override protected def render = {
     <.div(
       <.iframe(
         ^.attr("width") :="1600", ^.attr("height") := "960", ^.src := s"https://www.youtube.com/embed/$yt",

@@ -8,7 +8,7 @@ import willscala.given
 
 import scala.scalajs.js
 
-val catTheoryIntro = unique(<.div(
+val catTheoryIntro = <.div(
   chapterHeading(5, "Category Theory", "images/typeclasses.png"),
   marked("""
            |Some terms in functional programming come from a branch of mathematics called *Category Theory*.
@@ -16,4 +16,4 @@ val catTheoryIntro = unique(<.div(
            |look at what this is and also introduce *typeclasses*. 
            |""".stripMargin
   ),
-))
+)

@@ -1,12 +1,12 @@
 package willscala.templates
 
 import com.wbillingsley.veautiful.DiffNode
-import com.wbillingsley.veautiful.html.{<, VHtmlComponent, ^}
+import com.wbillingsley.veautiful.html.{<, DHtmlComponent, ^}
 import org.scalajs.dom.{Element, Node}
 
-case class KalturaStage(videoId:String, partnerId:String, size:(Int, Int) = (1600, 960)) extends VHtmlComponent {
+case class KalturaStage(videoId:String, partnerId:String, size:(Int, Int) = (1600, 960)) extends DHtmlComponent {
 
-  override protected def render: DiffNode[Element, Node] = {
+  override protected def render = {
     val (width, height) = size
 
     <.iframe(

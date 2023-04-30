@@ -1,6 +1,6 @@
 package willscala.actors
 
-import com.wbillingsley.veautiful.templates._
+import com.wbillingsley.veautiful.doctacular.*
 import com.wbillingsley.veautiful.html.<
 import willscala.Common._
 import willscala.MermaidDiagram

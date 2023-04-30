@@ -2,7 +2,7 @@ package willscala.functional
 
 
 import com.wbillingsley.veautiful.html._
-import com.wbillingsley.veautiful.templates._
+import com.wbillingsley.veautiful.doctacular.*
 import willscala.styleSuite
 import willscala.Common
 import willscala.Common.{marked, willCcBy}
