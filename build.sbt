@@ -1,7 +1,7 @@
 enablePlugins(ScalaJSPlugin)
 
 name := "Will Scala"
-scalaVersion := "3.1.1"
+scalaVersion := "3.2.2"
 
 // This is an application with a main method
 scalaJSUseMainModuleInitializer := true
@@ -23,7 +23,7 @@ libraryDependencies ++= Seq(
   "com.wbillingsley" %%% "doctacular" % "0.3-M6",
 
   // Amdram
-  "com.wbillingsley" %%% "amdram" % "0.0.0+5-cd0f1dd9-SNAPSHOT",
+  "com.wbillingsley" %%% "amdram" % "0.0.0+10-993bfbd8-SNAPSHOT",
 
   // macrotask executor
   "org.scala-js" %%% "scala-js-macrotask-executor" % "1.1.1",
