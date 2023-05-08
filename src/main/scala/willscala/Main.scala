@@ -127,6 +127,12 @@ object Main {
       ),
       "9. Asynchronous streams" -> site.Toc(
         "Intro" -> site.addPage("asyncStreamIntro", asyncstreams.intro),
+        "Async iterators" -> site.add("asyncIterators",
+          Alternative("Slide deck", Deck(() => asyncstreams.asyncIteratorsDeck)),
+        ),
+        "Iteratees" -> site.add("iteratees",
+          Alternative("Slide deck", Deck(() => asyncstreams.iterateesDeck)),
+        ),
         "Reactive Streams" -> site.add("reactiveStreams",
           Alternative("Slide deck", Deck(() => asyncstreams.reactiveStreamsDeck)),
         ),
