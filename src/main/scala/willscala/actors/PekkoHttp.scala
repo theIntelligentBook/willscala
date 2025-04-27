@@ -51,12 +51,13 @@ val pekkoHttp = DeckBuilder(1920, 1080)
       |
       |---
       |
-      |## But being a JVM language
+      |## Imports
       |
-      |There are a lot of import statements up the top
+      |Being a JVM language, there's a lot of imports at the top
+      |
+      |(But realistically, no worse than a `package.json` file for Node)
       |
       |```
-      |//> using scala 3.3.5
       |//> using dep "org.apache.pekko::pekko-stream::1.1.3"
       |//> using dep "org.apache.pekko::pekko-actor-typed::1.1.3"
       |//> using dep "org.apache.pekko::pekko-http::1.1.0"
