@@ -118,12 +118,16 @@ object Main {
         "Amdram" -> site.add("amdramDeck",
           Alternative("Slide deck", Deck(() => actors.amdramDeck)),
         ),
-        "Akka untyped" -> site.add("akkaClassicDeck",
+        "Akka/Pekko untyped" -> site.add("akkaClassicDeck",
           Alternative("Slide deck", Deck(() => actors.akkaClassicDeck)),
         ),
-        "Akka typed" -> site.add("typedActors",
+        "Akka/Pekko typed" -> site.add("typedActors",
           Alternative("Slide deck", Deck(() => actors.typedActors)),
         ),
+        "Pekko-HTTP" -> site.add("pekkoHttp",
+          Alternative("Slide deck", Deck(() => actors.pekkoHttp)),
+        ),
+
       ),
       "9. Asynchronous streams" -> site.Toc(
         "Intro" -> site.addPage("asyncStreamIntro", asyncstreams.intro),
