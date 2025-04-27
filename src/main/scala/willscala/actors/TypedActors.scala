@@ -13,13 +13,15 @@ val typedActors = DeckBuilder(1920, 1080)
       |""".stripMargin).withClass("center middle")
   .markdownSlidex(
     """
-      |## The trouble with Akka Classic Actors
+      |## The trouble with Untyped Actors
       |
       |Classic (untyped) Actors have two aspects that functional programmers wouldn't be keen on:
       |
-      |1. They're untyped. There's no way of knowing what messages an actor can receive
+      |1. They're untyped. There's no way of knowing what messages an actor can receive.  
+      |   This one I think might matter to you - sending a message to an actor that could never handle it seems like an obvious bug we'd like to catch
       |
-      |2. They're mutable, whereas functional programmers prefer working with immutable data types
+      |2. They're mutable, whereas functional programmers prefer working with immutable data types.    
+      |   This one might matter less to a lot of students. Most similar frameworks (e.g. Node.js, Vert.x) are in imperative languages anyway.
       |
       |*Typed Actors* try to fix both these problems.
       |

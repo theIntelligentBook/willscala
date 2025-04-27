@@ -69,7 +69,7 @@ val actorsDeck = DeckBuilder(1920, 1080)
       |
       |* No penalty for massive parallelism -- *it has to be really cheap to spawn new processes*
       |
-      |* No unavoidable penalty for distribution -- *doesn't matter if the target of your message is on another machine*
+      |* No avoidable penalty for distribution -- *doesn't matter if the target of your message is on another machine*
       |
       |* Concurrent behaviour of program same on all OSs
       |

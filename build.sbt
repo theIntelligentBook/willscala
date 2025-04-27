@@ -1,7 +1,7 @@
 enablePlugins(ScalaJSPlugin)
 
 name := "Will Scala"
-scalaVersion := "3.2.2"
+scalaVersion := "3.3.5"
 
 // This is an application with a main method
 scalaJSUseMainModuleInitializer := true
@@ -20,7 +20,7 @@ updateOptions := updateOptions.value.withLatestSnapshots(false)
 
 libraryDependencies ++= Seq(
   //"com.github.wbillingsley.veautiful" %%% "veautiful" % "v0.2-SNAPSHOT",
-  "com.wbillingsley" %%% "doctacular" % "0.3-M6",
+  "com.wbillingsley" %%% "doctacular" % "0.3.0",
 
   // Amdram
   "com.wbillingsley" %%% "amdram" % "0.0.0+10-993bfbd8-SNAPSHOT",

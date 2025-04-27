@@ -8,29 +8,28 @@ import willscala.given
 val akkaClassicDeck = DeckBuilder(1920, 1080)
   .markdownSlide(
     """
-      |# Akka actors
+      |# Akka and Pekko: actors framework in Scala
       |""".stripMargin).withClass("center middle")
   .markdownSlidex(
     """
       |### Akka Classic
       |
-      |Akka is a Scala library for actors that used to be open source.
+      |Akka is a Scala library for actors. 
       |
       |In 2022, the company supporting it moved to the [Business Source Licence](https://doc.akka.io/docs/akka/current/project/licenses.html), so versions are
       |
-      |* closed source (requiring a commercial licence for production use) for four years
+      |* closed source (requiring a commercial licence for production use) for 36 months
       |* open source after that 
       |
-      |The version we're using pre-dates the change, so is still under the Apache 2.0 Licence. 
-      |But it makes it a little more awkward teaching the technology, as recent versions aren't free to use.
+      |But in 2023, an open source fork called **Pekko** was made of it by the Apache project.
+      |
+      |- We will talk about Akka (as that's where the concepts come from), but we'll mostly use Pekko (because it's open source).  
       |
       |---
       |
-      |### Akka "Classic (Untyped) Actors"
+      |### "Classic" (Untyped) Actors
       |
-      |*Akka* is Scala's actor framework. It's a library, rather than a core part of the language.
-      |
-      |It has *typed* and *untyped* versions of Actors. The *untyped* version looks similar to Erlang.
+      |**Akka/Pekko** started out as an *untyped* framework. The *untyped* version looks similar to Erlang.
       |
       |Defining an Actor:
       |
@@ -43,9 +42,11 @@ val akkaClassicDeck = DeckBuilder(1920, 1080)
       |}
       |```
       |
+      |It's also similar to how Node.js works and Vertx's "multi-reactor" pattern, in that you mostly  
+      |
       |---
       |
-      |### Akka
+      |### Receive is a partial function
       |
       |`receive` is defined as a partial function -- that's why we haven't given it an argument in parentheses or a `match`
       |statement
@@ -65,7 +66,7 @@ val akkaClassicDeck = DeckBuilder(1920, 1080)
       |
       |---
       |
-      |### Akka
+      |### Props - properties to create your actor with
       |
       |Creating Actors has a little wrinkle
       |
@@ -74,7 +75,7 @@ val akkaClassicDeck = DeckBuilder(1920, 1080)
       |  val hello = system.actorOf(Props[Hello], name = "hello")
       |```
       |
-      |What's `Props`?
+      |What's `Props`? It's there because Akka/Pekko supports having clusters of computers.
       |
       |---
       |
