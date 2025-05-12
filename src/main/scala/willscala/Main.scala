@@ -144,6 +144,11 @@ object Main {
           Alternative("Slide deck", Deck(() => asyncstreams.catsEffectDeck)),
         ),
       ),
+      "10. Rust" -> site.Toc(
+        "Rust" -> site.add("rust",
+          Alternative("Slide deck", Deck(() => rust.rustDeck)),
+        ),
+      ),
     )
     
     site.home = () => site.renderPage(frontPage)
